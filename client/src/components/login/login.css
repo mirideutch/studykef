@@ -1,0 +1,23 @@
+.pic{
+    height: 100vh; 
+    background-image: url('../../images/8.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/* letter.png */
+/* 1137.jpg */
+.login_button{
+    position: relative;
+    top: 30vh;
+    width: 20vh;
+}
+.buttens{
+    
+        position: absolute;
+        top: 60px;
+        right: 60px;
+        
+        font-size: 50px;
+     
+}

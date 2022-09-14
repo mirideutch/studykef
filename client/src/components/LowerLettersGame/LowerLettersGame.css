@@ -1,0 +1,38 @@
+.pop{
+    height: 100vh; 
+    background-image: url('../../images/9.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.but{
+    color: rgb(227, 12, 98);;
+    background-color: #f5e5f5 ;
+    /* opacity: 0.3; */
+    border-radius: 30px;
+    border-color: rgb(227, 12, 98);
+    width: 100%;
+    height: 100%;
+    position: static;
+    font-family: 'Times New Roman', serif;
+    font-size: 40px;
+    font-weight:bold;
+    
+}
+.maindiv{
+    width: 40vw;
+    height: 60vh;
+    /* color: aliceblue; */
+    position: absolute;
+    top:30%;
+    left: 30%;
+    /* background-color: aliceblue; */
+    /* opacity: 0.3; */
+}
+
+
+.rowofbuttens{
+    position: absolute;
+     bottom: 4px;
+     width: 100%;
+}

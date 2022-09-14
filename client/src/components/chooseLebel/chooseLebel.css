@@ -1,0 +1,42 @@
+
+.pictu{
+    /* min-height: 100%; */
+    height: 100vh; 
+    background-image: url('../../images/mmm.png');
+    background-position: center;
+    /* background-position: center center; */
+
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    text-align: center;
+    
+}
+.divr{
+    position: relative;
+    /* margin-left: 10vw;
+    margin-right: 10vw; */
+    width: 60vw;
+    /* display: inline-block; */
+    top:20%
+
+
+    /* position: static; */
+    /* bottom: 20%; */
+}
+.mybutten{
+    /* width: 70%;
+    height: 80%;
+    margin: 1%; */
+    border:blue 4px solid;
+    position: static;
+    top: 30vh;
+    width: 15vh;
+    /* border-radius:; */
+}
+.col{
+    
+    height: 15vh;
+    /* padding: 5%; */
+   
+}
