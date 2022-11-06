@@ -4,25 +4,6 @@ const userModel = require('../Models/userModel')
 const { getLetter } = require('./letterController')
 const letterControler = require('./letterController')
 
-const addGam = (req, res) => {
-    console.log("addGame");
-    let exerciseUser = req.body.exerciseUser
-    let newExerciseUser = new exerciseUserModel({
-        user: exerciseUser.user,
-        label: exerciseUser.label,
-        gameExercise: exerciseUser.gameExercise,
-        mark: exerciseUser.mark
-    })
-    newExerciseUser.save().then(() => {
-        exerciseUserModel.find({ user: newExerciseUser.user, label: newExerciseUser.label })
-    }).then((resp) => {
-        console.log("resp      " + resp);
-    }).then(() => {
-        res.json({ "m": "r" })
-    }).catch((err) => {
-        res.send("error+" + err)
-    })
-}
 
 
 const addGame = async (req, res) => {
