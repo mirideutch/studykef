@@ -1,3 +1,7 @@
+//////מעודכן
+
+
+
 import axios from "axios";
 // import React, { useState, useEffect } from 'react';
 import React, { useState, useEffect } from "react";
@@ -8,6 +12,9 @@ import {useLocation} from 'react-router-dom'
 import { connect } from 'react-redux'
 import Stepp from  '../Stepper/Stepper'
 import {updateGame, insertLebel} from '../../redux/actions/lebelsAction'
+
+
+import AlertDialog from '../finishExercize'
 
 function mapStateToProps(state) {
     return {
@@ -97,6 +104,7 @@ function mapStateToProps(state) {
             setx(x + 1)
         else{
             alert("you finish")
+            
             calcMark()
         }
     }
@@ -119,22 +127,30 @@ function mapStateToProps(state) {
                     let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
                     if (res.GOOD!='') { 
                         dispatch(insertLebel(res.GOOD))
+                        setSatus(2)///////////////סימת שלב חוץ מסיום והצלחת המשחק
                     }
                 }
             else        
                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
             await dispatch(updateGame(exerciseUser))
-      
+                setSatus(1)///סיום והצלחת המשחק
     
          } 
+         else
 
+            await setSatus(-1)//////////////////לא הצלחת
+         setOpen(true);
+         
     }
 
+    const [open, setOpen] = useState(false);
+    const [status, setSatus] = useState(0)
 
     return (
 
         <>
         <Stepp steps={steps} labels={labelLetters} labelNow={letterLabel} style={{ lineHeight: '0px !importent' }}></Stepp>
+        {open && <AlertDialog open={open} setOpen={setOpen} status={status}></AlertDialog>}
             <h1>{theLet}</h1>
             {sounds != null ? <audio src={`http://localhost:3030/audio/${sounds[theLet].soundLetter}`} controls autoPlay /> : ""}
 

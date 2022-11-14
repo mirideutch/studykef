@@ -1,0 +1,25 @@
+/* div{
+    border: black 1px solid
+} */
+.imgup{
+    /* float:left; */
+    position: absolute;
+    bottom: 30vh;
+    left: 30vw;
+    /* display: block;
+  margin-left: auto;
+  margin-right: auto; */
+  width: 400px;
+  height: 400px;
+}
+.imglow{
+    position: relative;
+    top: 400vh;
+    right: 300vw;
+}
+.contlearn{
+    /* height: 90%; */
+    height:80vh;
+    position: absolute;
+    margin: auto;
+}

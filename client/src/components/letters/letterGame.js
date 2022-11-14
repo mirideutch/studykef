@@ -13,6 +13,8 @@ import Stepper from 'react-stepper-horizontal';
 import Stepp from  '../Stepper/Stepper'
 
 
+import AlertDialog from '../finishExercize'
+
 function mapStateToProps(state) {
     return {
         myLebels: state.lebelsReduser.myLebels,
@@ -74,18 +76,7 @@ function mapStateToProps(state) {
     }, [x])
 
     function check(item) {
-        // if (item==theLet) {
-        //     alert("nice")
-        //     if(item==letterLabel)
-        //         setNumCorront(numCorront+1)
-        //     if(x<objarraygame.length)
-        //         setx(x+1)
-        //     else
-        //         alert("you finish")
-        // }
-        // else
-        //     alert("bad")
-
+        
         if (item == theLet) {
             alert("nice")
             setnice(nice + 1)
@@ -102,7 +93,8 @@ function mapStateToProps(state) {
         else
             {
                 alert("you finish")
-                calcMark()
+                // calcMark()
+                setOpen(true);
             }
     }
 
@@ -119,44 +111,40 @@ function mapStateToProps(state) {
       
     }
 
-       async function  calcMark() {
-            let m = nice*3 - bad
+    //    async function  calcMark() {
+    //         let m = nice*3 - bad
 
-            let exerciseUser={exerciseUser:
-            {
-                user:user,
-                label:letterLabel,
-                gameExercise:game,
-                mark:m
-            }}
-           if(numCorront > 4)
-            {
-                setisSucs(true)
-                if(myLebels[letterLabel][game]==undefined)                
-                    {
-                        let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
-                        if (res.GOOD!='') { 
-                            dispatch(insertLebel(res.GOOD))
-                        }
-                }
-                else        
-                    {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
-                await dispatch(updateGame(exerciseUser))
-                // let flag=true
-                // for (let index = 0; index < 4; index++) {
-                //     if(myLebels[letterLabel][index]==undefined)
-                //         flag=false                   
-                // }
-                // if(flag){
-    
-                //     let nLetter= await axios.get(`http://localhost:3030/letter/getNextLetter/${letterLabel}`)
-                //     await dispatch (insertLebel(nLetter))
-                // }
-             } 
-             else
-                alert("לא עברת את המשחק - תרגל שוב את האות ")
-             navigate("/Game")
-        }
+    //         let exerciseUser={exerciseUser:
+    //         {
+    //             user:user,
+    //             label:letterLabel,
+    //             gameExercise:game,
+    //             mark:m
+    //         }}
+    //        if(numCorront > 4)
+    //         {
+    //             setisSucs(true)
+    //             if(myLebels[letterLabel][game]==undefined)                
+    //                 {
+    //                     let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
+    //                     if (res.GOOD!='') { 
+    //                         dispatch(insertLebel(res.GOOD))
+    //                     }
+    //             }
+    //             else        
+    //                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
+    //             await dispatch(updateGame(exerciseUser))              
+    //          } 
+    //          else
+    //             alert("לא עברת את המשחק - תרגל שוב את האות ")
+    //          navigate("/Game")
+    //     }
+
+
+        const [open, setOpen] = useState(false);
+        const handleClickOpen = () => {
+            setOpen(true);
+          };
 
     return (
         <div className="pict">
@@ -169,6 +157,12 @@ function mapStateToProps(state) {
             <h1>{theLet}</h1> */}
             {/* <div style={{height:"20%"}}></div> */}
             <div className='container-fluid col-8 maindiv' style={{ border: "black 1px solid" }}>
+            {/* / */}
+            <Button variant="outlined" onClick={handleClickOpen}>
+        Open alert dialog
+      </Button>
+     {open && <AlertDialog open={open} setOpen={setOpen} bad={bad} nice={nice} numCorront={numCorront} game={game} letterLabel={letterLabel}></AlertDialog>}
+                
                 {/* <button onClick={f} style={{margin:"2px"}} > Click Me</button> */}
                 <Button id="seeLetter" onClick={f} >שנה שלב</Button>
                 <br></br><br></br>

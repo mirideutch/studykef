@@ -143,7 +143,7 @@ export default connect(mapStateToProps)(function Game(props) {
                     </div>
                      <div className='col-1'></div>
                   
-                        
+                       <Button onClick={navg6}>למידה</Button> 
                     </div>
                     
                 </div>
