@@ -121,7 +121,7 @@ export default connect(mapStateToProps)(function LearnLetter(props){
             </div>
          </div>
          </div>
-         <button onClick={finish}>סיים</button>  
+         <button style={{position:"fixed"}} onClick={finish}>סיים </button>  
 
 
 

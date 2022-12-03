@@ -3,7 +3,6 @@
 
 
 import axios from "axios";
-// import React, { useState, useEffect } from 'react';
 import React, { useState, useEffect } from "react";
 // import './play.css'
 // import '../letters/play'
@@ -150,7 +149,7 @@ function mapStateToProps(state) {
 
         <>
         <Stepp steps={steps} labels={labelLetters} labelNow={letterLabel} style={{ lineHeight: '0px !importent' }}></Stepp>
-        {open && <AlertDialog open={open} setOpen={setOpen} status={status}></AlertDialog>}
+        {open && <AlertDialog open={open} setOpen={setOpen} status={status} label={letterLabel}></AlertDialog>}
             <h1>{theLet}</h1>
             {sounds != null ? <audio src={`http://localhost:3030/audio/${sounds[theLet].soundLetter}`} controls autoPlay /> : ""}
 

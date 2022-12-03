@@ -154,18 +154,21 @@ const Mark = async (req, res)=>{
     }
 }
 
-const getMark = async (label, user) => {
+const getMark = async ( user, label) => {
     console.log("getMark");
     try {
 
         let sum = 0
         exercise = await exerciseUserModel.find({ user: user, label: label }, { mark: 1, _id: 0 })
-        console.log("exercise   " + exercise);
-        console.log("exercise.length    " + exercise.length);
-        exercise.forEach(element => {
-            sum += element.mark
-        });
-        console.log("sum  "+sum);
+        // console.log("exercise   " + exercise);
+        // console.log("exercise.length    " + exercise.length);
+        if(exercise.length>=4){
+
+            exercise.forEach(element => {
+                sum += element.mark
+            });
+        }
+        // console.log("sum  "+sum+"  label "+label);
         // res.send(sum)
         return sum
     }
@@ -195,75 +198,55 @@ const getMar = async () => {
 
 
 const getAvgMark = async (req, res) => {
-    console.log("getAvgMark   ");
+    console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvgetAvgMark   ");
     let birthDate = req.params.birthDate
-    console.log("birthDate   " + birthDate);
-    console.log("type   " + typeof (birthDate));
-
-    let b = new Date(birthDate);
-
-    console.log({ $gt: (b.getFullYear() - 1) });
+    let b = new Date(birthDate); 
     try {
-        //  exerciseUserModel.find({ label: req.params.label }).populate('User', null, { userBirthDate: userBirthDate.getFullYear() == birthDate.getFullYear() })
-        
-        
         time1 = new Date(birthDate)
         time2 = new Date(birthDate)        
-        
         let users = await userModel.find({
             userBirthDate: {                
                 $gte: time1.setFullYear(b.getFullYear() - 1),               
                 $lte: time2.setFullYear(b.getFullYear() + 1),
             } })
-            let Labels=req.params.labels
-            let ob = {}
+            let L=req.params.labels
+            let Labels = L.replace(/,/g, '');
+            console.log("---------newTest   "+Labels);
+            let ob =[]
             for (let index = 0; index < Labels.length; index++) {
-
-                let c=0
-                let s=0
-
+                let numOfUsers=0
+                let totalMarks=0
                 for (let ind = 0; ind < users.length; ind++) {
-
                     let exerciseg = await exerciseUserModel.find({ user: users[ind], label: Labels[index] })
-                    let count = exerciseg.length
-                    
+                    let count = exerciseg.length               
                     let sum=0
-                    if(count==4){
+                    if(count >= 4){
                         exerciseg.forEach(element => {
-                                     sum+=element.mark
-                                 });
-                        c+=1
-                        s+=sum
+                            sum+=element.mark
+                        });                                
+                    numOfUsers+=1
+                    totalMarks+=sum
                     }
-                    console.log("exerciseg "+exerciseg+"user.   "+users[ind].userFirstName+"  Labels[index] "+Labels[index]+"   sum   "+sum)
-
                 }
-                if(c!=0){
-
-                    let avg= s/c
-                    console.log("-----------------sumOfKids   "+c+"   avgmark   "+avg);
-                    console.log(Labels[index]);
-                    ob[Labels[index]] = avg
+                if(numOfUsers!=0){
+                    let avg= totalMarks/numOfUsers
+                    ob.push(avg)
                 }
-                
-                
-            }
-            console.log("ob   "+ob);
-
-            let hism = {}
+                else{
+                    ob.push(totalMarks)   
+                }               
+            }        
+            let hism = []
             for (let index = 0; index < Labels.length; index++) {
-                let hismark =0
-                let hisexercize = await exerciseUserModel.find({user:req.params.user, label: Labels[index]})
-                if(hisexercize.length==4){
-                    hisexercize.forEach(element=>hismark+=element.mark)
-                }
-            hism[Labels[index]] = hismark
-            }
-    res.json({ob:ob, hism:hism})
-
+                let hismark =await getMark( req.params.user, Labels[index])
+                hism.push(hismark)                
+            }  
+            console.log("Labels  "+Labels);
+            console.log("avg:   "+ob);
+            console.log("hism :  "+hism);
+        res.json({avg:ob, hism:hism})
          }
     catch (err) {
-            console.log("err  " + err);
             res.send(err)
 
         }
@@ -304,5 +287,6 @@ const getAvgMark = async (req, res) => {
         }
     }
 
-    module.exports = { addGame, updateMark, getState, getMark, getAvgMark, Mark }
+    module.exports = { addGame, updateMark, getState, getAvgMark, Mark }
 
+    // , getMark

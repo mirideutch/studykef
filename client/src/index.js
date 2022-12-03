@@ -17,7 +17,7 @@ import Game from './components/game/game'
 import LetterNameGame from './components/letterNameGame/letterNameGame'
 import LowerLettersGame from './components/LowerLettersGame/LowerLettersGame'
 import SoundwordsGame from './components/SoundwordsGame/SoundwordsGame'
-import {Graph} from './components/graph/graph'
+import Graph from './components/graph/graph'
 import Instruction from './components/instruction/instruction'
 // import chooseLebel from './components/chooseLebel/chooseLebel';
 
@@ -42,7 +42,7 @@ ReactDOM.render(
           <Route path="LetterNameGame" element={<LetterNameGame />}></Route>
           <Route path="LowerLettersGame" element={<LowerLettersGame />}></Route>
           <Route path="SoundwordsGame" element={<SoundwordsGame />}></Route>
-          <Route path="Graph" element={<Graph />}></Route>
+          {/* <Route path="Graph" element={<Graph />}></Route> */}
           <Route path="Instruction" element={<Instruction />}></Route>
         </Route>
       </Routes>
