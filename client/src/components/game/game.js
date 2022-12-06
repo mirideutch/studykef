@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './game.css'
 import po from '../../images/backg.png'
 import { useNavigate } from 'react-router-dom'
@@ -24,6 +24,7 @@ import Stepp from  '../Stepper/Stepper'
 import {Link} from 'react-router-dom'
 
 import FullScreenDialog from '../graph/graph'
+import Instruction from "../instruction/instruction";
 
 function mapStateToProps(state) {
   return {
@@ -35,32 +36,51 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps)(function Game(props) {
   const navigate = useNavigate()
-  const { myLebels, newLabel } = props
   const location = useLocation()
-  let letterLabel
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const { myLebels, newLabel } = props
   
+  const [open, setOpen] = useState(false);//graph
+  const handleClickOpen = () => {
     setOpen(true);
   };
+  
+  const [openb, setOpenb] = useState(false);//Instruction
+  const handleClickOpenb = () => {
+    
+    setOpenb(true);
+  };
+  
+  const [labelNow, setLabelNow] = useState('')
+  let letterLabel= location.state.labelNow
+  // const [keys, setkeys ]= useState(Object.keys(myLebels))//כל השלבים כולל החדש????
+  let keys=Object.keys(myLebels)
+  if (newLabel != '' && newLabel != keys[keys.length - 1]){keys.push(newLabel)}
+  let lastLet = Object.keys(myLebels)[Object.keys(myLebels).length - 1];
+  // const [lastLet, setlastLet]= useState()
+  
+  const [ook, setook] = useState(false)
 
-  const lastLet = Object.keys(myLebels)[Object.keys(myLebels).length - 1]
-  const [labelNow, setLabelNow] = useState(newLabel != '' ? newLabel : lastLet)//האחרון/החדש 
+  
+  
+  useEffect(async function () {   
+      // lastLet = await Object.keys(myLebels)[Object.keys(myLebels).length - 1]
+       if (letterLabel!=""){
+     await setLabelNow(letterLabel)
+    }
+    else
+    await setLabelNow(newLabel != '' ? newLabel : lastLet)
+    
 
-  const keys = Object.keys(myLebels)//כל השלבים כולל החדש
-  if (newLabel != '' && newLabel != keys[keys.length - 1]) { keys.push(newLabel) }
+    console.log("labelNow2  "+labelNow);
+  }, [])
+
 
   const steps = keys.map(item => {
     return { title: item + " שלב " }
   })
-  // if(location.state.labelNow!=undefined)
-  //   letterLabel= location.state.label
-  // else
-  // letterLabel=labelNow
-
   
   console.log(myLebels);
-  console.log(labelNow);
+  console.log("labelNow  "+labelNow);
   
 
   const [state, setState] = React.useState({
@@ -103,6 +123,8 @@ export default connect(mapStateToProps)(function Game(props) {
         navigate("/SoundwordsGame", { state: { labelNow: labelNow } });
         break;
       case 4:
+        console.log("labelNow3  "+labelNow);
+        
         navigate("/LearnLetter", { state: { labelNow: labelNow } })
         break;
       default:
@@ -126,8 +148,10 @@ export default connect(mapStateToProps)(function Game(props) {
                     </Button>
                     </div>
                     <div className='col-1'>
-                    <Link to={'/Instruction'}>הוראות</Link>
-
+                    {/* <Link to={'/Instruction'}>הוראות</Link> */}
+                    <Button variant="outlined" onClick={handleClickOpenb}>
+                    הוראות
+                    </Button>
                     </div>
                     <div className='col-9'>
 
@@ -331,6 +355,7 @@ export default connect(mapStateToProps)(function Game(props) {
          </div>
          </div>
          {open && <FullScreenDialog open={open} setOpen={setOpen}></FullScreenDialog>}
+         {openb && <Instruction open={openb} setOpen={setOpenb}></Instruction>}
          </>
     //   </div>
     // </div >

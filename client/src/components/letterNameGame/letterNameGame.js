@@ -1,7 +1,7 @@
 //////מעודכן
 
 
-
+import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 // import './play.css'
@@ -12,6 +12,13 @@ import { connect } from 'react-redux'
 import Stepp from  '../Stepper/Stepper'
 import {updateGame, insertLebel} from '../../redux/actions/lebelsAction'
 
+
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 import AlertDialog from '../finishExercize'
 
@@ -35,7 +42,7 @@ function mapStateToProps(state) {
     let labelLetters = Object.keys(myLebels)
     const { dispatch } = props;
     const location=useLocation()
-
+    const navigate = useNavigate()
 
     let letterLabel= location.state.labelNow
 
@@ -56,23 +63,31 @@ function mapStateToProps(state) {
     const [isSucs, setisSucs] = useState(false)
     const [mark ,setmark] = useState(0)
 
-    // useEffect(function () {
-    //     labelLetters.push(letterLabel)
-    //     axios.get(`http://localhost:3030/letter/getSoundLetters/${labelLetters}`).then(res => {
-    //         console.log(res);
-    //         setsounds(res.data)
-            
-    //     }).then(console.log(objarraygame+"         objarraygame"))
+
+    // const {open ,setOpen ,status ,label} = props
+    const [openb, setOpenb] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    // if (status==2){
+    //   setOpenb(true)
+    // }
+    navigate("/Game")
+  };
+//   const handleCloseb = () => {
+//     setOpenb(false);
+//   };
 
 
-    // }, [])
+
+    
     useEffect(async function () {
         labelLetters.push(letterLabel)
         if(labelLetters.length <4)
              labelLetters=await ['A','B','C','D']
         let res= await axios.get(`http://localhost:3030/letter/getSoundLetters/${labelLetters}`)
             console.log(res);
-            setsounds(res.data)
+            await setsounds(res.data)
             
         (console.log(objarraygame+"         objarraygame"))
 
@@ -120,50 +135,92 @@ function mapStateToProps(state) {
         }}
        if(numCorront > 4)
         {
-            setisSucs(true)
+            // setisSucs(true)
             if(myLebels[letterLabel][game]==undefined)                
                 {
                     let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
                     if (res.GOOD!='') { 
                         dispatch(insertLebel(res.GOOD))
-                        setSatus(2)///////////////סימת שלב חוץ מסיום והצלחת המשחק
+                        setisFinishLabel(true)///////////////סימת שלב חוץ מסיום והצלחת המשחק
                     }
                 }
             else        
                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
             await dispatch(updateGame(exerciseUser))
-                setSatus(1)///סיום והצלחת המשחק
+            setisSucs(true)///סיום והצלחת המשחק
     
          } 
          else
 
-            await setSatus(-1)//////////////////לא הצלחת
+            await setisSucs(false)//////////////////לא הצלחת
          setOpen(true);
          
     }
 
     const [open, setOpen] = useState(false);
-    const [status, setSatus] = useState(0)
+    const [isFinishLabel, setisFinishLabel] = useState(false)
 
     return (
 
         <>
         <Stepp steps={steps} labels={labelLetters} labelNow={letterLabel} style={{ lineHeight: '0px !importent' }}></Stepp>
-        {open && <AlertDialog open={open} setOpen={setOpen} status={status} label={letterLabel}></AlertDialog>}
             <h1>{theLet}</h1>
             {sounds != null ? <audio src={`http://localhost:3030/audio/${sounds[theLet].soundLetter}`} controls autoPlay /> : ""}
 
             <div className='row rowofbuttens ' style={{ height: "20%" }}  >
 
-                {theOption && theOption.length && theOption.map(item => (
+                {theOption && theOption.length && theOption.map((item,index) => (
                     <div className='col-3'>
-                        <button key={item} onClick={() => check(item)} className='but'>
+                        <button key={index} onClick={() => check(item)} className='but'>
 
                             <b>{item}</b>
 
                         </button>
                     </div>
                 ))}</div>
+
+                {/* {open && <AlertDialog open={open} setOpen={setOpen} status={status} label={letterLabel}></AlertDialog>} */}
+    <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"studyכיף"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {isSucs ? ":) סימת בהצלחה " : "חבל, נסה שנית" }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>סגור</Button>
+          
+           
+        </DialogActions>
+      </Dialog>
+
+      {/* <Dialog
+        open={openb}
+        onClose={handleCloseb}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"studyכיף"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {"your mark is:" }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseb}>סגור</Button>
+          
+           
+        </DialogActions>
+      </Dialog> */}
 
         </>
 

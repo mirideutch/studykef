@@ -1,13 +1,21 @@
-import axios from "axios";
+import axios , { useState, useEffect } from "axios";
 import React from "react";
 
 export default function Letters(letterLabel,labelLetters ){
+  const [p, setp]= useState()
+
+  useEffect(async function () {  
+    if(labelLetters.length<4)
+    {      
+      labelLetters=axios.get('http://localhost:3030/letter/getFourLette')
+    }
+  }, [])
 
 
     if(labelLetters.length<4)
-    {
-      // labelLetters=fourLetters()///להביא מ  NODE 
-      labelLetters=['A','B','C','D']
+    { 
+      // labelLetters=['A','B','C','D']
+      labelLetters=axios.get('http://localhost:3030/letter/getFourLette')
     }
     
     const num=10  

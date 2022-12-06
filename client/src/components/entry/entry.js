@@ -7,6 +7,9 @@ import {useNavigate} from 'react-router-dom'
 import FormLogin from '../login/login2'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import './entry.css'
+import {Link} from 'react-router-dom'
+// import Form from '../form/form';
+
 
 function Entry(props) {
 
@@ -17,6 +20,7 @@ function Entry(props) {
     const passwordRef = useRef()
     const [name,setName]=useState()
     const [password,setPassword]=useState()
+    let labelNow=""
 
     function check() {
         let y;
@@ -32,11 +36,11 @@ function Entry(props) {
                 if(res.data== "x")
                 alert  ("diddddd")                 
                 dispatch((updateLebels(res.data.status)))
-                y=res.data.user
+                // y=res.data.user
                 // y.age=getAge(y.userBirthDate)
-                return y
-            }).then((yy) => {
-                dispatch(updateUser(yy))
+                // return y
+            // }).then((yy) => {
+            //     dispatch(updateUser(yy))
             }).then(()=>{
                 debugger
                 navg()
@@ -56,8 +60,8 @@ function Entry(props) {
 
     
     function navg(){
-        navigate("/Game")
-
+        navigate("/Game", { state: { labelNow: labelNow } })
+        
     }
     return (
         <div className="pic">
@@ -94,7 +98,9 @@ function Entry(props) {
                     </Segment>
                 </Form>
                 <Message>
-                    חדש? <a href='#'>הרשמה</a>
+                    חדש?
+                     {/* <a href='#'>הרשמה</a> */}
+                     <Link to={'/Form'}>הרשמה</Link>
                 </Message>
             </Grid.Column>
         </Grid>

@@ -43,7 +43,7 @@ ReactDOM.render(
           <Route path="LowerLettersGame" element={<LowerLettersGame />}></Route>
           <Route path="SoundwordsGame" element={<SoundwordsGame />}></Route>
           {/* <Route path="Graph" element={<Graph />}></Route> */}
-          <Route path="Instruction" element={<Instruction />}></Route>
+          {/* <Route path="Instruction" element={<Instruction />}></Route> */}
         </Route>
       </Routes>
     </Provider>

@@ -90,12 +90,14 @@ const createLetter = async (req, res) => {
 const getSoundLetters = async (req, res) => {
     const arrletter =req.params.labelLetters
     console.log(req.params.labelLetters)
+    let finalletter = arrletter.replace(/\,/g,"");
+    console.log(finalletter);
     try {
         let oob = {}
-        for (let lett in arrletter) {
-            let sound = await letterModel.findOne({ letter: arrletter[lett] }, { _id: 0, soundLetter: 1 })
+        for (let lett in finalletter) {
+            let sound = await letterModel.findOne({ letter: finalletter[lett] }, { _id: 0, soundLetter: 1 })
             console.log("sound----"+sound);
-            oob[arrletter[lett]] = sound
+            oob[finalletter[lett]] = sound
         }
         console.log("soundoob    "+oob);
         res.send(oob)
