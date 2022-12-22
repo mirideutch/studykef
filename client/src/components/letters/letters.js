@@ -1,21 +1,26 @@
 import axios , { useState, useEffect } from "axios";
 import React from "react";
 
-export default function Letters(letterLabel,labelLetters ){
-  const [p, setp]= useState()
 
-  useEffect(async function () {  
-    if(labelLetters.length<4)
-    {      
-      labelLetters=axios.get('http://localhost:3030/letter/getFourLette')
-    }
-  }, [])
+
+
+export default function Letters(letterLabel,labelLetters ,fourLetter){
+  // const [p, setp]= useState()
+
+  // useEffect(async function () {  
+  //   if(labelLetters.length<4)
+  //   {      
+  //     labelLetters=await axios.get('http://localhost:3030/letter/getFourLetter')
+  //   }
+  // }, [])
 
 
     if(labelLetters.length<4)
     { 
+      labelLetters=fourLetter
+      // labelLetters=fourLetters()
       // labelLetters=['A','B','C','D']
-      labelLetters=axios.get('http://localhost:3030/letter/getFourLette')
+      // labelLetters=  (  axios.get('http://localhost:3030/letter/getFourLetter')).data//localhost:3030/letter/getFourLetter
     }
     
     const num=10  
@@ -51,7 +56,7 @@ function shuffle(array) {
 //מגדיר מערך של האותיות עד השלב הזה
 //מקבל מספר נסיונות ויוצר מערך כפי המספר
 function arraycurrent(arrayL,num,lett){
-  const n=num%arrayL.length
+  let n=num%arrayL.length
   let copyed=arrayL.slice(-n)
   while (copyed.length<num) {
     copyed=copyed.concat(arrayL)
@@ -83,11 +88,15 @@ function finishgame(arraygame,labelLetters){
   })
   objarraygame.shift()
    return objarraygame 
-
+ 
   
 }
 
-function fourLetters(){
+ function fourLetters(){
   let l = axios.get("http://localhost:3030/letter/getFourLetter")
-  return l
+  return l.data
 }
+
+
+
+ 

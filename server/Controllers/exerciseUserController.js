@@ -19,15 +19,18 @@ const addGame = async (req, res) => {
         })
         console.log("nextl " + nextl);
         await newExerciseUser.save()
+        console.log("newExerciseUser  -----  "+newExerciseUser.gameExercise);
         let ex = await exerciseUserModel.find({ user: newExerciseUser.user, label: newExerciseUser.label })
         console.log("ex.length    " + ex.length);
         if (ex.length == 4) {
             nextl = await letterControler.getNextLetter(newExerciseUser.label)
             await console.log(nextl);
         }
-        res.status(300).json({ "GOOD": nextl })
+        console.log("good");
+        res.json({ "GOOD": nextl })
     }
     catch (err) {
+        console.log("err   "+err);
         res.send("error+" + err)
     }
 }
@@ -105,7 +108,7 @@ const getState = async (pass) => {//עוד לא בדקתי את הפונקציה
     const arrletter = await letterControler.getAllLetter()
     console.log("arrletter :  " + arrletter);
     try {
-        let neww = ''
+        let neww = ''//-----------------------
         let oob = {}
         for (let index = 0; index < arrletter.length; index++) {
             let exerciseg = await exerciseUserModel.find({ user: pass, label: arrletter[index] })
@@ -123,12 +126,18 @@ const getState = async (pass) => {//עוד לא בדקתי את הפונקציה
                 break;
 
         }
+        console.log("----------------------------------------------------------------");
         let arr = Object.keys(oob)
-        console.log("arr   " + arr);
+        console.log("arr   " + arr+"   arr.length"+arr.length);
         console.log("Object.length    " + Object.keys(oob[arr[arr.length - 1]]).length);
         if (arr.length === 0) {
             //אם אין אותיות בכלל - שלב ראשון
             neww = arrletter[0]
+        }
+        let fourLetter=[]
+        if(arr.length <4){
+            fourLetter.push( arrletter[0],arrletter[1],arrletter[2],arrletter[3])
+            
         }
         // מכיל אות - מפתח,  וערך- אוביקט של מספר משחק וציון כמספר המשחקים ששיחק באותו שלב OOB
         else if (Object.keys(oob[arr[arr.length - 1]]).length == 4) {//OOB חיפוש כמה משחקים יש באות האחרונה באוביקט 
@@ -137,7 +146,7 @@ const getState = async (pass) => {//עוד לא בדקתי את הפונקציה
             console.log("neww   " + neww);
         }
 
-        return { a: oob, b: neww }
+        return { a: oob, b: neww ,fourLetter:fourLetter}
     }
     catch (err) {
         console.log(err);

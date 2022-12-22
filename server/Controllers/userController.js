@@ -55,7 +55,11 @@ const createUser = async (req, res) => {
             await newUser.save()
             firstLetter = await letterController.getFirstLetter()
             console.log("newUser : "+newUser);
-            res.json({ ok: firstLetter, u: newUser })
+            
+            fourLetter=await letterController.getFourLetter()
+            console.log("fourLetter   "+fourLetter);
+            console.log(fourLetter.length);
+            res.json({ ok: firstLetter, u: newUser,fourLetter:fourLetter })
         }
         else {
             res.json({ no: "" })

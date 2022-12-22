@@ -15,10 +15,10 @@ export function insertGame(newGame){
 export function updateGame(game){
     return{type:'UPDATE_GAME',payLoad:game}
 }
-export function startGame(newLebel){
+export function startGame(newLebel,four){
     debugger
     console.log(newLebel);
-    return{type:'START_GAME',payLoad:newLebel}
+    return{type:'START_GAME',payLoad:newLebel,payLoadb:four}
 }
 export function learndNew (){
     return{type:'LEARND_NEW'}

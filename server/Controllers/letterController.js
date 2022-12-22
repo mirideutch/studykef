@@ -28,7 +28,7 @@ const getAllLetter = async () => {
         return err
     }
 }
-const getFourLetter = async(req, res)=>{ //////////////////////////////////////////////////////////////////////////
+const getFourLetter = async()=>{ //////////////////////////////////////////////////////////////////////////
     
     try{
         let fourLetters=await letterModel.find({},{letter:1, _id:0}).limit(4)      
@@ -36,11 +36,12 @@ const getFourLetter = async(req, res)=>{ ///////////////////////////////////////
                 
             //     return obj.letter;
             //   });.limit(4) 
-         let   finalArray =await fourLetters.map(l=> l.letter);                                                                  
-            res.send( finalArray)
+         let   finalArray =await fourLetters.map(l=> l.letter); 
+         console.log("finalArray-------"+finalArray);                                                                 
+            return finalArray
             }
             catch(err){
-                    res.send( err)
+                    return err
                 } 
 }               
 const getFirstLetter = async()=>{

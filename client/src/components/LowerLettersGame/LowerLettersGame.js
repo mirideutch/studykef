@@ -13,13 +13,15 @@ import Stepp from  '../Stepper/Stepper'
 function mapStateToProps(state) {
     return {
       myLebels: state.lebelsReduser.myLebels,
+      fourLetter : state.lebelsReduser.fourLetter,
+      letterLabel : state.lebelsReduser.now,
       user :state.useReducer.user._id
       
     }
   }
 
  function LowerLettersGame(props) {
-    const {myLebels, user}=props
+    const {myLebels, user, letterLabel, fourLetter}=props
     const game = 3
     const { dispatch } = props;
     const labelLetters = Object.keys(myLebels)
@@ -29,7 +31,7 @@ function mapStateToProps(state) {
     const location=useLocation()
 
 
-    let letterLabel= location.state.labelNow
+    // let letterLabel= location.state.labelNow
     // const { letterLabel } = props;//בהמשך צריך להביא אותו מהסטור
 
     const steps = labelLetters.map(item => {
@@ -37,7 +39,7 @@ function mapStateToProps(state) {
       })
 
     
-    const objarraygame = Letters(letterLabel,labelLetters)
+    const objarraygame = Letters(letterLabel,labelLetters, fourLetter)
     
 
 

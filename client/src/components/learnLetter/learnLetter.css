@@ -13,7 +13,7 @@
   height: 400px;
 }
 .imglow{
-    position: relative;
+    /* position: relative; */
     top: 400vh;
     right: 300vw;
 }

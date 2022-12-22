@@ -88,7 +88,7 @@ function QFormExample(props) {
               await setUserOk(true)
               
               await dispatch(updateUser(res.data.u))
-              await dispatch(startGame(res.data.ok))
+              await dispatch(startGame(res.data.ok, res.data.fourLetter))
             }
             else {
               await setUserOk(false)

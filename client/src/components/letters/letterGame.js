@@ -12,51 +12,68 @@ import Button from "semantic-ui-react/dist/commonjs/elements/Button";
 import Stepper from 'react-stepper-horizontal';
 import Stepp from  '../Stepper/Stepper'
 
+// import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
 
 import AlertDialog from '../finishExercize'
 
 function mapStateToProps(state) {
     return {
         myLebels: state.lebelsReduser.myLebels,
-        
-        // labelNow : state.lebelsReduser.now,
+        fourLetter : state.lebelsReduser.fourLetter,
+        letterLabel : state.lebelsReduser.now,
         user :state.useReducer.user._id
     }
   }
 
  function Play(props) {
-    const {myLebels, user}=props
+    const {myLebels, user, letterLabel, fourLetter}= props
     const game = 1
     const { dispatch } = props;
     const location=useLocation()
-    let letterLabel= location.state.labelNow
+    // let letterLabel= location.state.labelNow
     const navigate = useNavigate()
-
+    
     // const { letterLabel } = props;//האות של השלב//בהמשך צריך להביא אותו מהסטור
     // const labelLetters = ['A','B','C','D','E','F','G','H']//כל האותיות שנלמדו//בהמשך צריך להביא אותו מהסטור
-    const labelLetters= Object.keys(myLebels)
-
+    let labelLetters= Object.keys(myLebels)
+    
     const steps = labelLetters.map(item => {
         return { title: item + " שלב " }
-      })
+    })
     
-    const objarraygame = Letters(letterLabel,labelLetters)//האוביקט / מערך של המשחק
+    let objarraygame = Letters(letterLabel,labelLetters, fourLetter)//האוביקט / מערך של המשחק
+    // let objarraygame 
     const [visible, setVisible] = useState(true);
     const [visibleOps, setVisibleOps] = useState(false);
-
-
-    const [x, setx] = useState(0)//מספר האות - התרגול
-    const [theLet, setTheLet] = useState(objarraygame[0].correctLetter)//האות הנכונה
-    const [theOption, setTheOption] = useState(objarraygame[0].options)//האפשרויות
-    const [numCorront, setNumCorront] = useState(0)
+    
     const [nice, setnice] = useState(0)
     const [bad, setbad] = useState(0)
     const [isSucs, setisSucs] = useState(false)
     const [mark ,setmark] = useState(0)
 
-    useEffect(function(){
-        console.log(objarraygame);
-        setTimeout(() => {
+    const [x, setx] = useState(0)//מספר האות - התרגול
+    const [theLet, setTheLet] = useState(objarraygame[0].correctLetter)//האות הנכונה
+    const [theOption, setTheOption] = useState(objarraygame[0].options)//האפשרויות
+    const [numCorront, setNumCorront] = useState(0)
+
+    const [open, setOpen] = useState(false);
+    const [isFinishLabel, setisFinishLabel] = useState(false)
+
+    const handleClose = () => {
+        setOpen(false);
+        
+        navigate("/Game")
+      };
+
+    useEffect( function(){
+         setTimeout(() => {
             setVisible(false)
             setVisibleOps(true)
         }, 20000);
@@ -93,8 +110,8 @@ function mapStateToProps(state) {
         else
             {
                 alert("you finish")
-                // calcMark()
-                setOpen(true);
+                calcMark()
+                
             }
     }
 
@@ -111,40 +128,43 @@ function mapStateToProps(state) {
       
     }
 
-    //    async function  calcMark() {
-    //         let m = nice*3 - bad
+       async function  calcMark() {
 
-    //         let exerciseUser={exerciseUser:
-    //         {
-    //             user:user,
-    //             label:letterLabel,
-    //             gameExercise:game,
-    //             mark:m
-    //         }}
-    //        if(numCorront > 4)
-    //         {
-    //             setisSucs(true)
-    //             if(myLebels[letterLabel][game]==undefined)                
-    //                 {
-    //                     let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
-    //                     if (res.GOOD!='') { 
-    //                         dispatch(insertLebel(res.GOOD))
-    //                     }
-    //             }
-    //             else        
-    //                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
-    //             await dispatch(updateGame(exerciseUser))              
-    //          } 
-    //          else
-    //             alert("לא עברת את המשחק - תרגל שוב את האות ")
-    //          navigate("/Game")
-    //     }
+            let m = nice*3 - bad
+
+            let exerciseUser={exerciseUser:
+            {
+                user:user,
+                label:letterLabel,
+                gameExercise:game,
+                mark:m
+            }}
+           if(numCorront > 4)//אם היתה הצלחה
+            {
+                // setisSucs(true)
+                if(myLebels[letterLabel][game]==undefined)   //משחק חדש             
+                    {
+                        let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
+                        if (res.GOOD!='') { //לשלב הבא
+                            dispatch(insertLebel(res.GOOD))
+                            setisFinishLabel(true)
+                        }
+                }
+                else        //עדכון משחק קיים
+                    {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
+                await dispatch(updateGame(exerciseUser)) 
+                setisSucs(true)             
+             } 
+             else//במקרה של כשלון
+               await setisSucs(false)
+            setOpen(true);       
+             }
 
 
-        const [open, setOpen] = useState(false);
-        const handleClickOpen = () => {
-            setOpen(true);
-          };
+        // const [open, setOpen] = useState(false);
+        // const handleClickOpen = () => {
+        //     setOpen(true);
+        //   };
 
     return (
         <div className="pict">
@@ -158,13 +178,14 @@ function mapStateToProps(state) {
             {/* <div style={{height:"20%"}}></div> */}
             <div className='container-fluid col-8 maindiv' style={{ border: "black 1px solid" }}>
             {/* / */}
-            <Button variant="outlined" onClick={handleClickOpen}>
+            {/* <Button variant="outlined" onClick={handleClickOpen}>
         Open alert dialog
-      </Button>
-     {open && <AlertDialog open={open} setOpen={setOpen} bad={bad} nice={nice} numCorront={numCorront} game={game} letterLabel={letterLabel}></AlertDialog>}
+      </Button> */}
+     {/* {open && <AlertDialog open={open} setOpen={setOpen} bad={bad} nice={nice} numCorront={numCorront} game={game} letterLabel={letterLabel}></AlertDialog>} */}
                 
                 {/* <button onClick={f} style={{margin:"2px"}} > Click Me</button> */}
                 <Button id="seeLetter" onClick={f} >שנה שלב</Button>
+                
                 <br></br><br></br>
                 <h1>{visible == true && theLet}</h1>
                 {/* <div className='row' style={{ height: "75%" }} ></div> */}
@@ -186,6 +207,27 @@ function mapStateToProps(state) {
             <h1>bad: {bad}</h1>
             <h2>numCorront:   {numCorront}</h2>
             {isSucs?"v":"x"} */}
+
+<Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"studyכיף"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            { isSucs ? ":) סימת בהצלחה " : "חבל, נסה שנית" }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>סגור</Button>
+          
+           
+        </DialogActions>
+      </Dialog>
         </div>
     )
 }

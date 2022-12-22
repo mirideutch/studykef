@@ -11,6 +11,8 @@ import {updateGame, insertLebel} from '../../redux/actions/lebelsAction'
 function mapStateToProps(state) {
     return {
       myLebels: state.lebelsReduser.myLebels,
+      fourLetter : state.lebelsReduser.fourLetter,
+      letterLabel : state.lebelsReduser.now,
       user :state.useReducer.user._id
       
       
@@ -24,7 +26,7 @@ function SoundwordWithImageword(props) {
     // const labelLetters = ["A", "B", "C", "D", "E", "F", "G", "H"]//בהמשך צריך להביא אותו מהסטור
     // const labelLetters = ["A", "B", "C", "D", "E"]//בהמשך צריך להביא אותו מהסטור
     
-    const {myLebels, user}=props
+    const {myLebels, user, letterLabel, fourLetter}=props
     const game = 4
     const { dispatch } = props;
     let labelLetters = Object.keys(myLebels)
@@ -32,9 +34,9 @@ function SoundwordWithImageword(props) {
     const location=useLocation()
 
 
-    let letterLabel= location.state.labelNow
+    // let letterLabel= location.state.labelNow
 
-    const objarraygame = Letters(letterLabel, labelLetters)
+    const objarraygame = Letters(letterLabel, labelLetters, fourLetter)
 
     const steps = labelLetters.map(item => {
         return { title: item + " שלב " }

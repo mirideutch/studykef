@@ -4,8 +4,6 @@
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-// import './play.css'
-// import '../letters/play'
 import Letters from "../letters/letters";
 import {useLocation} from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -25,6 +23,8 @@ import AlertDialog from '../finishExercize'
 function mapStateToProps(state) {
     return {
       myLebels: state.lebelsReduser.myLebels,
+      fourLetter : state.lebelsReduser.fourLetter,
+      letterLabel : state.lebelsReduser.now,
       user :state.useReducer.user._id
       
     }
@@ -32,21 +32,16 @@ function mapStateToProps(state) {
 
  function LettersSound(props) {
 
-    // const { letterLabel } = props;//בהמשך צריך להביא אותו מהסטור
-    // const labelLetters = ["A", "B", "C", "D", "E", "F", "G", "H"]//בהמשך צריך להביא אותו מהסטור
-    // const labelLetters = ["A", "B", "C", "D", "E"]//בהמשך צריך להביא אותו מהסטור
-    
-    
-    const {myLebels, user}=props
+    const {myLebels, user, letterLabel, fourLetter}=props
     const game = 2
     let labelLetters = Object.keys(myLebels)
     const { dispatch } = props;
     const location=useLocation()
     const navigate = useNavigate()
 
-    let letterLabel= location.state.labelNow
+    // let letterLabel= location.state.labelNow
 
-    const objarraygame = Letters(letterLabel, labelLetters)
+    const objarraygame = Letters(letterLabel, labelLetters, fourLetter)
 
     const steps = labelLetters.map(item => {
         return { title: item + " שלב " }
@@ -69,9 +64,7 @@ function mapStateToProps(state) {
 
   const handleClose = () => {
     setOpen(false);
-    // if (status==2){
-    //   setOpenb(true)
-    // }
+    
     navigate("/Game")
   };
 //   const handleCloseb = () => {
@@ -191,7 +184,7 @@ function mapStateToProps(state) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {isSucs ? ":) סימת בהצלחה " : "חבל, נסה שנית" }
+            {! isSucs ? ":) סימת בהצלחה " : "חבל, נסה שנית" }
           </DialogContentText>
         </DialogContent>
         <DialogActions>
