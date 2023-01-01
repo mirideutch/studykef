@@ -46,8 +46,7 @@ const reducer = produce((state,action)=>{
             {debugger
                 state.new =action.payLoad 
                 state.now =action.payLoad
-                state.fourLetter=action.payLoad.fourLetter///////////
-                console.log(state.new);
+                
             }
             break;   
         case 'START_GAME':

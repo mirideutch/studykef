@@ -129,7 +129,6 @@ function mapStateToProps(state) {
     }
 
        async function  calcMark() {
-
             let m = nice*3 - bad
 
             let exerciseUser={exerciseUser:
@@ -139,32 +138,33 @@ function mapStateToProps(state) {
                 gameExercise:game,
                 mark:m
             }}
-           if(numCorront > 4)//אם היתה הצלחה
-            {
+           if(numCorront > 4){//אם היתה הצלחה           
                 // setisSucs(true)
-                if(myLebels[letterLabel][game]==undefined)   //משחק חדש             
-                    {
-                        let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
-                        if (res.GOOD!='') { //לשלב הבא
-                            dispatch(insertLebel(res.GOOD))
-                            setisFinishLabel(true)
-                        }
+                if(myLebels[letterLabel][game]==undefined) {   //משחק חדש             
+                   
+                    let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
+                    if (res.data.GOOD!="") { //לשלב הבא------------------------------""
+                            
+                        dispatch(insertLebel(res.data.GOOD))
+                        setisFinishLabel(true)
+                    }
                 }
                 else        //עדכון משחק קיים
                     {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
                 await dispatch(updateGame(exerciseUser)) 
-                setisSucs(true)             
-             } 
+                await setisSucs(true)             
+            } 
              else//במקרה של כשלון
                await setisSucs(false)
-            setOpen(true);       
-             }
+            await setOpen(true);       
+        }
 
 
         // const [open, setOpen] = useState(false);
         // const handleClickOpen = () => {
         //     setOpen(true);
         //   };
+
 
     return (
         <div className="pict">
@@ -184,7 +184,7 @@ function mapStateToProps(state) {
      {/* {open && <AlertDialog open={open} setOpen={setOpen} bad={bad} nice={nice} numCorront={numCorront} game={game} letterLabel={letterLabel}></AlertDialog>} */}
                 
                 {/* <button onClick={f} style={{margin:"2px"}} > Click Me</button> */}
-                <Button id="seeLetter" onClick={f} >שנה שלב</Button>
+                <Button id="seeLetter" onClick={f} >שוב את האות</Button>
                 
                 <br></br><br></br>
                 <h1>{visible == true && theLet}</h1>

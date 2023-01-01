@@ -54,6 +54,10 @@ function SoundwordWithImageword(props) {
     const [isSucs, setisSucs] = useState(false)
     const [mark ,setmark] = useState(0)
 
+
+    const [open, setOpen] = useState(false);
+    const [isFinishLabel, setisFinishLabel] = useState(false)
+
     useEffect(function () {
         labelLetters.push(letterLabel)
         if(labelLetters.length <4)
@@ -109,31 +113,36 @@ function SoundwordWithImageword(props) {
         }}
        if(numCorront > 4)
         {
-            setisSucs(true)
+            // setisSucs(true)
             if(myLebels[letterLabel][game]==undefined)                
                 {
                     let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
-                if (res.GOOD!='') { 
-                    dispatch(insertLebel(res.GOOD))
+                if (res.data.GOOD!='') { 
+                    dispatch(insertLebel(res.data.GOOD))
+                    setisFinishLabel(true)
                 }
             }
             else        
                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
             await dispatch(updateGame(exerciseUser))
-      
+            await setisSucs(true)    
     
-         } 
+        } 
+        else//במקרה של כשלון
+            await setisSucs(false)
+        await setOpen(true);       
 
     }
 
 
     return (
 
-        <>
+        
+        <div style={{backgroundColor:'#72bddb'}}>
         <Stepp steps={steps} labels={labelLetters} labelNow={letterLabel} style={{ lineHeight: '0px !importent' }}></Stepp>
             <h1>{theLet}</h1>
             {data && <audio src={`http://localhost:3030/audio/${data[theLet].wordsLetter[t].wordSound}`} controls autoPlay />}
-            {data && <img src={`http://localhost:3030/images/${data[theLet].wordsLetter[t].wordImage}`}></img>}
+            {data && <img src={`http://localhost:3030/images/${data[theLet].wordsLetter[t].wordImage}`} width={300}></img>}
             <div className='row rowofbuttens ' style={{ height: "20%" }}  >
 
                 {theOption && theOption.length && theOption.map(item => (
@@ -146,7 +155,7 @@ function SoundwordWithImageword(props) {
                     </div>
                 ))}</div>
 
-        </>
+        </div>
 
     )
 }

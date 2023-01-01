@@ -10,7 +10,7 @@ import Form from './components/form/form'
 import Container from './container';
 import Letters from './components/letters/letters';
 // import Play from './components/letters/play';
-import Continue from './components/continue/continue';
+// import Continue from './components/continue/continue';
 
 import { Provider } from 'react-redux';
 import store from './redux/store';

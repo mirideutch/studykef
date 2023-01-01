@@ -103,28 +103,25 @@ export default connect(mapStateToProps)(function Game(props){
 
                 setState({...state, [anchor]: open });
             };
-            const clicked = (area, i, e) => {
-                debugger
+            const clicked = (area, i, e) => {               
                 if (i != 4 && newLabel == labelNow) {
-                    alert("LearnLetter")
+                    alert("למד תחילה את האות")
                 } else {
                     switch (i) {
                         case 0:
-                            navigate("/LetterGame");//, { state: { labelNow: labelNow } }
+                            navigate("/LetterGame");
                             break;
                         case 1:
-                            navigate("/LetterNameGame")//, { state: { labelNow: labelNow } }
+                            navigate("/LetterNameGame")
                             break;
                         case 2:
-                            navigate("/LowerLettersGame");//, { state: { labelNow: labelNow } }
+                            navigate("/LowerLettersGame");
                             break;
                         case 3:
-                            navigate("/SoundwordsGame");//, { state: { labelNow: labelNow } }
+                            navigate("/SoundwordsGame");
                             break;
-                        case 4:
-                            console.log("labelNow3  " + labelNow);
-
-                            navigate("/LearnLetter")//, { state: { labelNow: labelNow } }
+                        case 4:  
+                            navigate("/LearnLetter")
                             break;
                         default:
                     }

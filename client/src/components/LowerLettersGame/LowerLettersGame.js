@@ -53,7 +53,8 @@ function mapStateToProps(state) {
     const [isSucs, setisSucs] = useState(false)
     const [mark ,setmark] = useState(0)
 
-    
+    const [open, setOpen] = useState(false);
+    const [isFinishLabel, setisFinishLabel] = useState(false)
 
 
     useEffect(function () {
@@ -95,21 +96,25 @@ function mapStateToProps(state) {
        if(numCorront > 4)
         {
             
-            setisSucs(true)
+            // setisSucs(true)
             if(myLebels[letterLabel][game]==undefined) {               
                 
                 let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
-                 if (res.GOOD!='') { 
-                    dispatch(insertLebel(res.GOOD))
+                 if (res.data.GOOD!='') { 
+                    dispatch(insertLebel(res.data.GOOD))
+                    setisSucs(true)
                 }
             
             }
             else        
                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
             await dispatch(updateGame(exerciseUser))
-      
+            await setisSucs(true)  
     
          } 
+         else//במקרה של כשלון
+         await setisSucs(false)
+      await setOpen(true);       
 
     }
 

@@ -4,36 +4,21 @@ import React from "react";
 
 
 
-export default function Letters(letterLabel,labelLetters ,fourLetter){
-  // const [p, setp]= useState()
-
-  // useEffect(async function () {  
-  //   if(labelLetters.length<4)
-  //   {      
-  //     labelLetters=await axios.get('http://localhost:3030/letter/getFourLetter')
-  //   }
-  // }, [])
-
-
-    if(labelLetters.length<4)
+export default function Letters(letterLevel,levelLetters ,fourLetter){
+let lettersOption
+    if(levelLetters.length<4)
     { 
-      labelLetters=fourLetter
-      // labelLetters=fourLetters()
-      // labelLetters=['A','B','C','D']
-      // labelLetters=  (  axios.get('http://localhost:3030/letter/getFourLetter')).data//localhost:3030/letter/getFourLetter
+      lettersOption=fourLetter
     }
-    
-    const num=10  
-    const copyed= arraycurrent(labelLetters,num,letterLabel)//הפונקציה שתבנה מערך של האותיות במשחק
-    //+++++++++++++++++++++++למה הוא לא מוכר?
-
-    
-    const arraygame= shuffle(copyed)//שולח את המערך לערבוב
-    const objarraygame= finishgame(arraygame,labelLetters)
-    console.log("objarraygame  :  "+objarraygame);
+    else{
+      lettersOption=levelLetters
+    }
+    const num=20  
+    const GameLetters= createGameLetters(levelLetters,num,letterLevel)//הפונקציה שתבנה מערך של האותיות במשחק  
+    const MixedGameLetters= shuffle(GameLetters)//שולח את המערך לערבוב
+    const objarraygame= finishgame(MixedGameLetters,lettersOption)//
     return objarraygame
 }
-
 //מקבלת מערך ומערבבת אותו
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
@@ -52,50 +37,43 @@ function shuffle(array) {
 
   return array;
 }
-//??מקבל את מערך כל האותיות
-//מגדיר מערך של האותיות עד השלב הזה
-//מקבל מספר נסיונות ויוצר מערך כפי המספר
-function arraycurrent(arrayL,num,lett){
+
+function createGameLetters(arrayL,num,lett){
   let n=num%arrayL.length
   let copyed=arrayL.slice(-n)
   while (copyed.length<num) {
     copyed=copyed.concat(arrayL)
   }
-  for (let index = 0; index < 4; index++) {
+  for (let index = 0; index < 5; index++) {
    copyed.push(lett);  
   }
   return copyed
 }
-function ob(labelLetters,lett){//מגריל 3 אותיות למערך + האות הנכונה = אפשרויות בחירה
-  let arrayletters=labelLetters.slice()//צריך להוציא את האות הנכונה מהרשימה!!!!!!
+
+function getoptions(labelLetters,lett){//מגריל 3 אותיות למערך + האות הנכונה = אפשרויות בחירה
+  let arrayletters=labelLetters.slice()//צריך להוציא את האות הנכונה מהרשימה!
   arrayletters.splice(labelLetters.lastIndexOf(lett),1)
   const array=[]
   for (let index = 0; index < 3; index++) {
     let theOption=Math.floor(Math.random() * ((arrayletters.length-1) - 0 + 1))
     array[index]=arrayletters[theOption] 
-    arrayletters.splice(theOption,1) //צריך להתיחס לאותיות הראשונות שיקבלו מערך כפול 
+    arrayletters.splice(theOption,1) 
   }
   array[3]=lett
-  const arrayop=shuffle(array)
-  return arrayop
+  const arrayoptions=shuffle(array)
+  return arrayoptions
 }
 function finishgame(arraygame,labelLetters){
   let objarraygame=[{}]
   let array=[]
   arraygame.forEach (function(lett,index,arraygame){
-    array=ob(labelLetters,lett)
-    objarraygame.push({correctLetter:lett,options:array})
+    array=getoptions(labelLetters,lett)//
+    objarraygame.push({correctLetter:lett,options:array})//
   })
   objarraygame.shift()
-   return objarraygame 
- 
-  
+   return objarraygame  
 }
 
- function fourLetters(){
-  let l = axios.get("http://localhost:3030/letter/getFourLetter")
-  return l.data
-}
 
 
 

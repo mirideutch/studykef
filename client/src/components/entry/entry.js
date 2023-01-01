@@ -10,6 +10,12 @@ import './entry.css'
 import {Link} from 'react-router-dom'
 // import Form from '../form/form';
 
+// import Swal from 'sweetalert2'
+
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
+
 
 function Entry(props) {
 
@@ -34,13 +40,13 @@ function Entry(props) {
             .then((res) => {
                 
                 if(res.data== "x")
-                alert  ("diddddd")                 
+                alert  ("diddddd")   //לעצור את הכל?              
                 dispatch((updateLebels(res.data.status)))
                 // y=res.data.user
                 // y.age=getAge(y.userBirthDate)
-                // return y
-            // }).then((yy) => {
-            //     dispatch(updateUser(yy))
+                 return res
+             }).then((res) => {
+                dispatch(updateUser(res.data.user))
             }).then(()=>{
                 debugger
                 navg()
@@ -63,10 +69,25 @@ function Entry(props) {
         navigate("/Game", { state: { labelNow: labelNow } })
         
     }
+
+
+
+    function message(){
+        Swal.fire({
+            title: 'Custom animation with Animate.css',
+            showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+            }
+          })
+    }
+
     return (
         <div className="pic">
 
-
+<button onClick={message}>message</button>
             {/* name
             <input ref={nameRef}></input>
             password

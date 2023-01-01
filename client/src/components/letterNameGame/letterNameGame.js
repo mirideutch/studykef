@@ -112,13 +112,12 @@ function mapStateToProps(state) {
         else{
             alert("you finish")
             
-            calcMark()
+            finishGame()
         }
     }
 
-    async function  calcMark() {
+    async function  finishGame() {
         let m = nice*3 - bad
-
         let exerciseUser={exerciseUser:
         {
             user:user,
@@ -128,26 +127,24 @@ function mapStateToProps(state) {
         }}
        if(numCorront > 4)
         {
-            // setisSucs(true)
             if(myLebels[letterLabel][game]==undefined)                
                 {
                     let res = await axios.post(`http://localhost:3030/exerciseUser/addGame`, exerciseUser)
-                    if (res.GOOD!='') { 
-                        dispatch(insertLebel(res.GOOD))
-                        setisFinishLabel(true)///////////////סימת שלב חוץ מסיום והצלחת המשחק
+                    if (res.data.GOOD!='') { 
+                        dispatch(insertLebel(res.data.GOOD))
+                        setisFinishLabel(true)
                     }
                 }
             else        
                 {let re= await axios.patch(`http://localhost:3030/exerciseUser/updateMark`, exerciseUser)}
             await dispatch(updateGame(exerciseUser))
-            setisSucs(true)///סיום והצלחת המשחק
+            setisSucs(true)
     
          } 
          else
 
-            await setisSucs(false)//////////////////לא הצלחת
-         setOpen(true);
-         
+            await setisSucs(false)
+         setOpen(true);         
     }
 
     const [open, setOpen] = useState(false);
@@ -157,7 +154,8 @@ function mapStateToProps(state) {
 
         <>
         <Stepp steps={steps} labels={labelLetters} labelNow={letterLabel} style={{ lineHeight: '0px !importent' }}></Stepp>
-            <h1>{theLet}</h1>
+            {/* <h1>{theLet}</h1> */}
+            <br></br><br></br>
             {sounds != null ? <audio src={`http://localhost:3030/audio/${sounds[theLet].soundLetter}`} controls autoPlay /> : ""}
 
             <div className='row rowofbuttens ' style={{ height: "20%" }}  >

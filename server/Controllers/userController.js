@@ -7,23 +7,14 @@ const mongoose = require('mongoose')
 
 const getUser = async (req, res) => {
     try {
-        let userd = await userModel.findOne().and([ {userFirstName: req.params.name}, {password: req.params.pass}] )
-        // let userd = await userModel.findOne({$and:[ {userFirstName: req.params.name}, {password: req.params.pass}] })
-        console.log("getUser:  "+userd);
-        console.log("type   " + typeof (userd.userBirthDate));
-        console.log(userd.userBirthDate instanceof Date);
+        let userd = await userModel.findOne().and([ {userFirstName: req.params.name}, {password: req.params.pass}] )       
         if(userd != null){
-
-            let r = await exerciseUserController.getState(userd._id)
-            console.log("userd._id:  "+userd._id);
-            console.log("getState    "+r);
+            let r = await exerciseUserController.getState(userd._id)            
             res.json({ user: userd, status: r })
         }
         else{
             res.send("x")
-        }
-
-        
+        }       
     }
     catch (err) {
         res.send("x")

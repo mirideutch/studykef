@@ -99,54 +99,39 @@ const getStat = async (pass) => {//עוד לא בדקתי את הפונקציה
         return err
     }
 }
-
-const getState = async (pass) => {//עוד לא בדקתי את הפונקציה    
-    //לעדכן גם אם יש לו שלב חדש
-    //להחליף לFINDBYID לUSER
-    // const arrletter=await letterModel.getAllLetter()
-    console.log("pass:  " + pass);
-    const arrletter = await letterControler.getAllLetter()
-    console.log("arrletter :  " + arrletter);
+//learningStatus  PracticesGames
+const getState = async (pass) => {       
+    const arrletter = await letterControler.getAllLetter()   
     try {
-        let neww = ''//-----------------------
-        let oob = {}
+        let newlevel = ""
+        let fourLetter=[]
+        let learningStatus = {}
         for (let index = 0; index < arrletter.length; index++) {
-            let exerciseg = await exerciseUserModel.find({ user: pass, label: arrletter[index] })
-            console.log("letter   " + arrletter[index]);
-            console.log("exerciseg  " + exerciseg);//ריק??????????
+            let PracticesGames = await exerciseUserModel.find({ user: pass, label: arrletter[index] })
             let ob = {}
-            if (exerciseg != '') {
-                exerciseg.forEach(element => {
+            if (PracticesGames != '') {
+                PracticesGames.forEach(element => {
                     ob[element.gameExercise] = element.mark
                 });
-                oob[arrletter[index]] = ob
-                console.log("oobexerciseg------------" + oob);
+                learningStatus[arrletter[index]] = ob
             }
             else
                 break;
-
         }
-        console.log("----------------------------------------------------------------");
-        let arr = Object.keys(oob)
-        console.log("arr   " + arr+"   arr.length"+arr.length);
-        console.log("Object.length    " + Object.keys(oob[arr[arr.length - 1]]).length);
+        console.log("learningStatus   "+learningStatus);
+        let arr = Object.keys(learningStatus)
+        console.log("arr   "+arr);
         if (arr.length === 0) {
-            //אם אין אותיות בכלל - שלב ראשון
-            neww = arrletter[0]
+            newlevel = arrletter[0]
         }
-        let fourLetter=[]
+        else if (Object.keys(learningStatus[arr[arr.length - 1]]).length == 4) { //
+            newlevel = arrletter[arr.length]            
+        }   
         if(arr.length <4){
             fourLetter.push( arrletter[0],arrletter[1],arrletter[2],arrletter[3])
             
         }
-        // מכיל אות - מפתח,  וערך- אוביקט של מספר משחק וציון כמספר המשחקים ששיחק באותו שלב OOB
-        else if (Object.keys(oob[arr[arr.length - 1]]).length == 4) {//OOB חיפוש כמה משחקים יש באות האחרונה באוביקט 
-
-            neww = arrletter[arr.length]
-            console.log("neww   " + neww);
-        }
-
-        return { a: oob, b: neww ,fourLetter:fourLetter}
+        return { a: learningStatus, b: newlevel ,fourLetter:fourLetter}
     }
     catch (err) {
         console.log(err);
@@ -206,8 +191,7 @@ const getMar = async () => {
 }
 
 
-const getAvgMark = async (req, res) => {
-    console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvgetAvgMark   ");
+const getAvgMark = async (req, res) => {   
     let birthDate = req.params.birthDate
     let b = new Date(birthDate); 
     try {
@@ -219,18 +203,17 @@ const getAvgMark = async (req, res) => {
                 $lte: time2.setFullYear(b.getFullYear() + 1),
             } })
             let L=req.params.labels
-            let Labels = L.replace(/,/g, '');
-            console.log("---------newTest   "+Labels);
-            let ob =[]
+            let Labels = L.replace(/,/g, '');           
+            let usersAvgMark =[]
             for (let index = 0; index < Labels.length; index++) {
                 let numOfUsers=0
                 let totalMarks=0
                 for (let ind = 0; ind < users.length; ind++) {
-                    let exerciseg = await exerciseUserModel.find({ user: users[ind], label: Labels[index] })
-                    let count = exerciseg.length               
+                    let PracticesGames = await exerciseUserModel.find({ user: users[ind], label: Labels[index] })
+                    let count = PracticesGames.length               
                     let sum=0
                     if(count >= 4){
-                        exerciseg.forEach(element => {
+                        PracticesGames.forEach(element => {
                             sum+=element.mark
                         });                                
                     numOfUsers+=1
@@ -239,21 +222,18 @@ const getAvgMark = async (req, res) => {
                 }
                 if(numOfUsers!=0){
                     let avg= totalMarks/numOfUsers
-                    ob.push(avg)
+                    usersAvgMark.push(avg)
                 }
                 else{
-                    ob.push(totalMarks)   
+                    usersAvgMark.push(totalMarks)   
                 }               
             }        
-            let hism = []
+            let hismMarks = []
             for (let index = 0; index < Labels.length; index++) {
                 let hismark =await getMark( req.params.user, Labels[index])
-                hism.push(hismark)                
-            }  
-            console.log("Labels  "+Labels);
-            console.log("avg:   "+ob);
-            console.log("hism :  "+hism);
-        res.json({avg:ob, hism:hism})
+                hismMarks.push(hismark)                
+            }         
+        res.json({avg:usersAvgMark, hism:hismMarks})
          }
     catch (err) {
             res.send(err)

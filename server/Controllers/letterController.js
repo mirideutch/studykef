@@ -108,6 +108,7 @@ const getSoundLetters = async (req, res) => {
     }
 
 }
+//getSoundAndImageWord
 const getSoundwordWithImageword = async (req, res) => {
     const arrletter = req.params.arrletter
     try {
