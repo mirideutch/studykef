@@ -8,7 +8,7 @@ import axios from "axios";
 import './LowerLettersGame.css'
 import {updateGame, insertLebel} from '../../redux/actions/lebelsAction'
 import Stepp from  '../Stepper/Stepper'
-
+import { useNavigate } from 'react-router-dom'
 
 function mapStateToProps(state) {
     return {
@@ -21,6 +21,7 @@ function mapStateToProps(state) {
   }
 
  function LowerLettersGame(props) {
+    const navigate = useNavigate()
     const {myLebels, user, letterLabel, fourLetter}=props
     const game = 3
     const { dispatch } = props;
@@ -36,7 +37,7 @@ function mapStateToProps(state) {
 
     const steps = labelLetters.map(item => {
         return { title: item + " שלב " }
-      })
+    })
 
     
     const objarraygame = Letters(letterLabel,labelLetters, fourLetter)
@@ -115,6 +116,8 @@ function mapStateToProps(state) {
          else//במקרה של כשלון
          await setisSucs(false)
       await setOpen(true);       
+      alert("your mark is  "+{m}+"  "+{setisSucs})   
+         navigate("/Game")     
 
     }
 

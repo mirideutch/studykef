@@ -74,6 +74,9 @@ const reducer = produce((state,action)=>{
             break;
             // case 'RESET':
             // {state.myLebels=['a']}
+        case 'CHANGE_LEVEL':
+            state.now=action.payLoad
+            break;
     }
 },initialState)
 

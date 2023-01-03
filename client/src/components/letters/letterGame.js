@@ -19,6 +19,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import wrong from '../../audio/wrong.wav'
+
 
 
 import AlertDialog from '../finishExercize'
@@ -39,6 +41,8 @@ function mapStateToProps(state) {
     const location=useLocation()
     // let letterLabel= location.state.labelNow
     const navigate = useNavigate()
+    let audio =new Audio(wrong)
+    audio.play();
     
     // const { letterLabel } = props;//האות של השלב//בהמשך צריך להביא אותו מהסטור
     // const labelLetters = ['A','B','C','D','E','F','G','H']//כל האותיות שנלמדו//בהמשך צריך להביא אותו מהסטור
@@ -184,10 +188,12 @@ function mapStateToProps(state) {
      {/* {open && <AlertDialog open={open} setOpen={setOpen} bad={bad} nice={nice} numCorront={numCorront} game={game} letterLabel={letterLabel}></AlertDialog>} */}
                 
                 {/* <button onClick={f} style={{margin:"2px"}} > Click Me</button> */}
-                <Button id="seeLetter" onClick={f} >שוב את האות</Button>
+                <br></br><br></br>
+                {visible?<h1>{theLet}</h1>:<Button onClick={f} >שוב את האות</Button>}
+                {/* <Button id="seeLetter" onClick={f} >שוב את האות</Button>
                 
                 <br></br><br></br>
-                <h1>{visible == true && theLet}</h1>
+                <h1>{visible == true && theLet}</h1> */}
                 {/* <div className='row' style={{ height: "75%" }} ></div> */}
                 <img src={sk} className="ballon"></img>
                 <div className='row rowofbuttens ' style={{ height: "20%" }}  >
@@ -228,6 +234,9 @@ function mapStateToProps(state) {
            
         </DialogActions>
       </Dialog>
+      <div>
+
+      </div>
         </div>
     )
 }

@@ -26,19 +26,25 @@ import { Link } from 'react-router-dom'
 import FullScreenDialog from '../graph/graph'
 import Instruction from "../instruction/instruction";
 
+
+import {changeLevel} from '../../redux/actions/lebelsAction'
+
 function mapStateToProps(state) {
     return {
         myLebels: state.lebelsReduser.myLebels,
         newLabel: state.lebelsReduser.new,
-        nowLabel: state.lebelsReduser.now
+        nowLabel: state.lebelsReduser.now,
+        userName :state.useReducer.user.userFirstName
     }
 }
 
 
 export default connect(mapStateToProps)(function Game(props){
             const navigate = useNavigate()
+            const { dispatch } = props
             // const location = useLocation()
-            const { myLebels, newLabel } = props
+            const { myLebels, newLabel,userName} = props
+            const [visible, setVisible] = useState(true);
 
             const [open, setOpen] = useState(false); //graph
             const handleClickOpen = () => {
@@ -83,6 +89,12 @@ export default connect(mapStateToProps)(function Game(props){
             console.log("labelNow  " + labelNow);
 
 
+            //  function changel(item){
+            //      setLabelNow(item)
+            //     //  dispatch(changeLevel(item))
+
+            // }
+
             const [state, setState] = React.useState({
                 top: false,
                 left: false,
@@ -103,6 +115,22 @@ export default connect(mapStateToProps)(function Game(props){
 
                 setState({...state, [anchor]: open });
             };
+
+
+
+            useEffect(function () {                
+                // setVisible(true)                
+                setTimeout(() => {
+                    setVisible(false)                    
+                }, 5000);
+            }, [])
+
+            useEffect(function () {                
+                dispatch(changeLevel(labelNow))
+            }, [labelNow])
+
+
+
             const clicked = (area, i, e) => {               
                 if (i != 4 && newLabel == labelNow) {
                     alert("למד תחילה את האות")
@@ -159,6 +187,7 @@ export default connect(mapStateToProps)(function Game(props){
                         </Stepp> 
                     </div> 
                    < div className = 'col-1' >
+                    {visible && <h5>{userName}  שלום</h5>}
                      </div>
 
 
@@ -182,8 +211,8 @@ export default connect(mapStateToProps)(function Game(props){
                         <List > {
                             keys.map((item, index) => ( 
                                < ListItem key = { index }
-                                disablePadding onClick = {
-                                    () => setLabelNow(item) } >
+                                disablePadding onClick = {()=> setLabelNow(item)} >
+                                    
                                 
                                <ListItemButton >                               
                                 <ListItemIcon >                              

@@ -7,6 +7,7 @@ import Letters from "../letters/letters";
 import {useLocation} from 'react-router-dom'
 import Stepp from  '../Stepper/Stepper'
 import {updateGame, insertLebel} from '../../redux/actions/lebelsAction'
+import { useNavigate } from 'react-router-dom'
 
 function mapStateToProps(state) {
     return {
@@ -25,7 +26,7 @@ function SoundwordWithImageword(props) {
     // const { letterLabel } = props;//בהמשך צריך להביא אותו מהסטור
     // const labelLetters = ["A", "B", "C", "D", "E", "F", "G", "H"]//בהמשך צריך להביא אותו מהסטור
     // const labelLetters = ["A", "B", "C", "D", "E"]//בהמשך צריך להביא אותו מהסטור
-    
+    const navigate = useNavigate()
     const {myLebels, user, letterLabel, fourLetter}=props
     const game = 4
     const { dispatch } = props;
@@ -130,7 +131,9 @@ function SoundwordWithImageword(props) {
         } 
         else//במקרה של כשלון
             await setisSucs(false)
-        await setOpen(true);       
+        await setOpen(true);  
+        alert("your mark is  "+{m}+"  "+{setisSucs})   
+         navigate("/Game")          
 
     }
 

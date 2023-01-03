@@ -26,3 +26,10 @@ export function learndNew (){
 export function reset(){
     return{type:'RESET'}
 }
+export function changeLevel(nowLevel){
+    debugger
+    console.log(nowLevel+"   nowLevel");
+    return{type:'CHANGE_LEVEL',payLoad:nowLevel}
+    
+}
+

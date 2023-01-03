@@ -12,9 +12,9 @@ import {Link} from 'react-router-dom'
 
 // import Swal from 'sweetalert2'
 
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+// import Swal from 'sweetalert2/dist/sweetalert2.js'
 
-import 'sweetalert2/src/sweetalert2.scss'
+// import 'sweetalert2/src/sweetalert2.scss'
 
 
 function Entry(props) {
@@ -72,22 +72,22 @@ function Entry(props) {
 
 
 
-    function message(){
-        Swal.fire({
-            title: 'Custom animation with Animate.css',
-            showClass: {
-              popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-              popup: 'animate__animated animate__fadeOutUp'
-            }
-          })
-    }
+    // function message(){
+    //     Swal.fire({
+    //         title: 'Custom animation with Animate.css',
+    //         showClass: {
+    //           popup: 'animate__animated animate__fadeInDown'
+    //         },
+    //         hideClass: {
+    //           popup: 'animate__animated animate__fadeOutUp'
+    //         }
+    //       })
+    // }
 
     return (
         <div className="pic">
 
-<button onClick={message}>message</button>
+{/* <button onClick={message}>message</button> */}
             {/* name
             <input ref={nameRef}></input>
             password

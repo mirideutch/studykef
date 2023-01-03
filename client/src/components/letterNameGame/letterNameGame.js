@@ -144,7 +144,9 @@ function mapStateToProps(state) {
          else
 
             await setisSucs(false)
-         setOpen(true);         
+         setOpen(true); 
+         alert("your mark is  "+{m}+"  "+{setisSucs})   
+         navigate("/Game")     
     }
 
     const [open, setOpen] = useState(false);
