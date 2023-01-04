@@ -20,7 +20,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import wrong from '../../audio/wrong.wav'
-
+import success from '../../audio/success.wav'
+import completionAlevel from '../../audio/completionAlevel.wav'
 
 
 import AlertDialog from '../finishExercize'
@@ -41,11 +42,12 @@ function mapStateToProps(state) {
     const location=useLocation()
     // let letterLabel= location.state.labelNow
     const navigate = useNavigate()
-    let audio =new Audio(wrong)
-    audio.play();
+    let audioWrong =new Audio(wrong)
+    let audioSuccess =new Audio(success)
+    let audioCompletionAlevel =new Audio(completionAlevel)
     
-    // const { letterLabel } = props;//האות של השלב//בהמשך צריך להביא אותו מהסטור
-    // const labelLetters = ['A','B','C','D','E','F','G','H']//כל האותיות שנלמדו//בהמשך צריך להביא אותו מהסטור
+    
+   
     let labelLetters= Object.keys(myLebels)
     
     const steps = labelLetters.map(item => {
@@ -53,7 +55,7 @@ function mapStateToProps(state) {
     })
     
     let objarraygame = Letters(letterLabel,labelLetters, fourLetter)//האוביקט / מערך של המשחק
-    // let objarraygame 
+     
     const [visible, setVisible] = useState(true);
     const [visibleOps, setVisibleOps] = useState(false);
     
@@ -96,24 +98,40 @@ function mapStateToProps(state) {
         }, 2000);
     }, [x])
 
+    function goodAnswer(){
+        audioSuccess.play()
+        setnice(nice + 1)
+    }
+
+    function wrongAnswer(){
+        audioWrong.play()
+        setbad(bad + 1)
+    }
+
     function check(item) {
         
         if (item == theLet) {
-            alert("nice")
-            setnice(nice + 1)
+            // alert("nice")
+            // setnice(nice + 1)
+            goodAnswer()
 
             if (item == letterLabel)
                 setNumCorront(numCorront + 1)
         }
         else {
-            alert("bad")
-            setbad(bad + 1)
+            // alert("bad")
+            // setbad(bad + 1)
+            wrongAnswer()
         }
         if (x < objarraygame.length-1)
             setx(x + 1)
         else
             {
-                alert("you finish")
+                // alert("you finish")
+                audioCompletionAlevel.play(
+
+
+                )
                 calcMark()
                 
             }
