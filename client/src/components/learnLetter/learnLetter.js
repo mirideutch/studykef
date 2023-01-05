@@ -177,10 +177,10 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
 
 
             return ( 
-                <>
+                <div className = 'learn'>
                     
 
-
+{/* <br></br><br></br><br></br><br></br> */}
                     {soundLetter!='' && <audio ref ={ audioLetterRef } src = { `http://localhost:3030/audio/${soundLetter}`} controls style = {{ display: "none" }}/>} 
         
                     {audioWord1rRef!='' && <audio ref = { audioWord1rRef }src = { `http://localhost:3030/audio/${wordSound}` }controls style = {{ display: "none" } }/>}  
@@ -198,7 +198,8 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                     <div className = 'row' >
                                     
                         <div className = 'container-fluid col-5' >
-                            {imageUppercase!='' && <img onClick = {() => { audioLetterRef.current.play() } }src = { `http://localhost:3030/images/${imageUppercase}` }className = "imgup" style={{position: "fixed", left:"10px"}} ></img>}
+                        {/* style={{position: "fixed", left:"10px"}}  */}
+                            {imageUppercase!='' && <img onClick = {() => { audioLetterRef.current.play() } }src = { `http://localhost:3030/images/${imageUppercase}` }className = "imgup" ></img>}
                                      
                         </div> 
 
@@ -246,10 +247,10 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                         </div> 
                     </div>
                                                     
-                    <button style = {{ position: "fixed" } } onClick = { finish } > סיים </button>
+                    {/* <button style = {{ position: "fixed" } } onClick = { finish } > סיים </button> */}
 
                                                    
-                    </>
+                    </div>
                 
                     )
                 })

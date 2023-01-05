@@ -45,7 +45,8 @@ function mapStateToProps(state) {
     let audioWrong =new Audio(wrong)
     let audioSuccess =new Audio(success)
     let audioCompletionAlevel =new Audio(completionAlevel)
-    
+    const [responce, setResponce]= useState('')
+    const [visibleRes, setVisibleRes]=useState(false)
     
    
     let labelLetters= Object.keys(myLebels)
@@ -101,11 +102,23 @@ function mapStateToProps(state) {
     function goodAnswer(){
         audioSuccess.play()
         setnice(nice + 1)
+        setResponce('מצוין!!!')
+        setVisibleRes(true)
+        setTimeout(() => {
+            setVisibleRes(false)
+            continueGame()
+        }, 2000);
     }
 
     function wrongAnswer(){
         audioWrong.play()
         setbad(bad + 1)
+        setResponce('חבל')
+        setVisibleRes(true)
+        setTimeout(() => {
+            setVisibleRes(false)
+            continueGame()
+        }, 2000);
     }
 
     function check(item) {
@@ -123,15 +136,17 @@ function mapStateToProps(state) {
             // setbad(bad + 1)
             wrongAnswer()
         }
+    }
+    function continueGame(){
         if (x < objarraygame.length-1)
             setx(x + 1)
         else
             {
                 // alert("you finish")
-                audioCompletionAlevel.play(
+                audioCompletionAlevel.play()
 
 
-                )
+                
                 calcMark()
                 
             }
@@ -253,7 +268,7 @@ function mapStateToProps(state) {
         </DialogActions>
       </Dialog>
       <div>
-
+{visibleRes && <h1>{responce}</h1>}
       </div>
         </div>
     )

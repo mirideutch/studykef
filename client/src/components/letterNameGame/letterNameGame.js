@@ -20,6 +20,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import AlertDialog from '../finishExercize'
 
+
+import wrong from '../../audio/wrong.wav'
+import success from '../../audio/success.wav'
+import completionAlevel from '../../audio/completionAlevel.wav'
+
 function mapStateToProps(state) {
     return {
       myLebels: state.lebelsReduser.myLebels,
@@ -46,6 +51,15 @@ function mapStateToProps(state) {
     const steps = labelLetters.map(item => {
         return { title: item + " שלב " }
       })
+
+
+    
+      let audioWrong =new Audio(wrong)
+      let audioSuccess =new Audio(success)
+      let audioCompletionAlevel =new Audio(completionAlevel)
+      const [responce, setResponce]= useState('')
+      const [visibleRes, setVisibleRes]=useState(false)
+      
 
     const [x, setx] = useState(0)
     const [theLet, setTheLet] = useState(objarraygame[0].correctLetter)
@@ -94,29 +108,83 @@ function mapStateToProps(state) {
 
     }, [x])
 
-    function check(item) {
+    // function check(item) {
 
-        if (item == theLet) {
-            alert("nice")
-            setnice(nice + 1)
+    //     if (item == theLet) {
+    //         alert("nice")
+    //         setnice(nice + 1)
 
-            if (item == letterLabel)
-                setNumCorront(numCorront + 1)
-        }
-        else {
-            alert("bad")
-            setbad(bad + 1)
-        }
-        if (x < objarraygame.length - 1)
-            setx(x + 1)
-        else{
-            alert("you finish")
+    //         if (item == letterLabel)
+    //             setNumCorront(numCorront + 1)
+    //     }
+    //     else {
+    //         alert("bad")
+    //         setbad(bad + 1)
+    //     }
+    //     if (x < objarraygame.length - 1)
+    //         setx(x + 1)
+    //     else{
+    //         alert("you finish")
             
-            finishGame()
-        }
-    }
+    //         finishGame()
+    //     }
+    // }
 
-    async function  finishGame() {
+    function goodAnswer(){
+      audioSuccess.play()
+      setnice(nice + 1)
+      setResponce('מצוין!!!')
+      setVisibleRes(true)
+      setTimeout(() => {
+          setVisibleRes(false)
+          continueGame()
+      }, 2000);
+  }
+
+  function wrongAnswer(){
+      audioWrong.play()
+      setbad(bad + 1)
+      setResponce('חבל')
+      setVisibleRes(true)
+      setTimeout(() => {
+          setVisibleRes(false)
+          continueGame()
+      }, 2000);
+  }
+
+  function check(item) {
+      
+      if (item == theLet) {
+          // alert("nice")
+          // setnice(nice + 1)
+          goodAnswer()
+
+          if (item == letterLabel)
+              setNumCorront(numCorront + 1)
+      }
+      else {
+          // alert("bad")
+          // setbad(bad + 1)
+          wrongAnswer()
+      }
+  }
+  function continueGame(){
+      if (x < objarraygame.length-1)
+          setx(x + 1)
+      else
+          {
+              // alert("you finish")
+              audioCompletionAlevel.play()
+
+
+              
+              calcMark()
+              
+          }
+  }
+
+
+    async function  calcMark() {
         let m = nice*3 - bad
         let exerciseUser={exerciseUser:
         {
@@ -214,7 +282,7 @@ function mapStateToProps(state) {
            
         </DialogActions>
       </Dialog> */}
-
+{visibleRes && <h1>{responce}</h1>}
         </>
 
     )
