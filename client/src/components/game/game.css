@@ -41,10 +41,10 @@ span{
     line-height: 29px !important;
    
 }
-#changeLabel{
-    position: fixed;
-        top: 70px;
-        right: 60px;        
+#hello{
+    position: absolute;
+        top: 100px;
+        left: 270px;        
         font-size: 20px;
 }
 /* .login_button{
@@ -153,4 +153,36 @@ span{
     position: relative;
       width:1100px;
       height:680px ; 
+}
+.texts{
+    position: absolute;
+  /* bottom: 220px;
+  right: 20px; */
+  
+  color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#learn{
+    bottom: 220px;
+    right: 20px;
+}
+#games{
+    top :50px;
+    left:0px;
+}
+/* span{
+    position: absolute;
+            top: 17px;
+            left: 50px;
+} */
+.logb{
+    width: 150px;
+
+    /* position: relative;
+    top: 3vh;
+    right: 5vw; */
+}
+.row2{
+    padding-top: 2vh;
 }

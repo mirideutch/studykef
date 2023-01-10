@@ -33,5 +33,13 @@
 }
 .learn{
 background-color: aquamarine;
+/* text-align: center; */
 padding: 10vh;
+}
+.learntext{
+    position: absolute;
+    top: 120px;
+
+    
+    right: 520px;
 }

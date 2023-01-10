@@ -60,18 +60,7 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                         setwordSound2(r.data.wordsLetter[1].wordSound)
                         setwordImage2(r.data.wordsLetter[1].wordImage)
 
-                        // setimageUppercase(res.data.imageUppercase)
-                        // setimageLowercase(res.data.imageLowercase)
-                        // setsoundLetter(res.data.soundLetter)
-                        // setword(res.data.wordsLetter[0].word)
-                        // setwordSound(res.data.wordsLetter[0].wordSound)
-                        // setwordImage(res.data.wordsLetter[0].wordImage)
-                        // setword2(res.data.wordsLetter[1].word)
-                        // setwordSound2(res.data.wordsLetter[1].wordSound)
-                        // setwordImage2(res.data.wordsLetter[1].wordImage)
-                    // }).then(() => {
-                    //     setupperWord(word.toUpperCase())
-                    //     setupperWord2(word2.toUpperCase())
+                     
                     }catch(err ){
                         console.log(err+"my err(((")
                     }}
@@ -81,84 +70,6 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                 , []
             )
 
-
-            // useEffect(()=>{
-            //         setimageUppercase(ress.imageUppercase)
-            //             setimageLowercase(ress.imageLowercase)
-            //             setsoundLetter(ress.soundLetter)
-
-            //             setarrword(ress.wordsLetter)
-
-            //             // setword(ress.wordsLetter[0].word)
-            //             // setwordSound(ress.wordsLetter[0].wordSound)
-            //             // setwordImage(ress.wordsLetter[0].wordImage)
-            //             // setword2(ress.wordsLetter[1].word)
-            //             // setwordSound2(ress.wordsLetter[1].wordSound)
-            //             // setwordImage2(ress.wordsLetter[1].wordImage)
-            // },[ress])
-
-
-            // useEffect(
-            //   async  function g() {
-            //     try{
-
-            //         let ress =await axios.get(`http://localhost:3030/letter/getLetter/${letterL}`)
-                        
-            //         await setimageUppercase(ress.data.imageUppercase)
-            //         await setimageLowercase(ress.data.imageLowercase)
-            //         await setsoundLetter(ress.data.soundLetter)
-            //         await setword(ress.data.wordsLetter[0].word)
-            //         await setwordSound(ress.data.wordsLetter[0].wordSound)
-            //         await setwordImage(ress.data.wordsLetter[0].wordImage)
-            //         await setword2(ress.data.wordsLetter[1].word)
-            //         await setwordSound2(ress.data.wordsLetter[1].wordSound)
-            //         await setwordImage2(ress.data.wordsLetter[1].wordImage)
-                    
-            //         await setupperWord(word.toUpperCase())
-            //         await  setupperWord2(word2.toUpperCase())
-            //     }
-            //         catch(err){
-            //             console.log(err)
-            //         }
-            //     }, []
-            // )
-
-            // useEffect(
-            //      () =>{
-
-            //         axios.get(`http://localhost:3030/letter/getLetter/${letterL}`).then(res => {
-
-            //             setimageUppercase(res.data.imageUppercase)
-            //             return res
-            //     }).then(res=>{
-            //         setimageLowercase(res.data.imageLowercase)
-            //         return res
-            //     }).then(res=>{
-            //         setsoundLetter(res.data.soundLetter)
-            //         return res
-            //     }).then(res=>{
-            //         setword(res.data.wordsLetter[0].word)
-            //         return res
-            //     }).then(res=>{
-            //         setwordSound(res.data.wordsLetter[0].wordSound)
-            //         return res
-            //     }).then(res=>{
-            //         setwordImage(res.data.wordsLetter[0].wordImage)
-            //         return res
-            //     }).then(res=>{
-            //         setword2(res.data.wordsLetter[1].word)
-            //         return res
-            //     }).then(res=>{
-            //         setwordSound2(res.data.wordsLetter[1].wordSound)
-            //         return res
-            //     }).then(res=>{
-            //         setwordImage2(res.data.wordsLetter[1].wordImage)
-            //         return res
-            //     }).catch((err) => {
-            //             console.log("err-----------------"+err)
-            //         })
-            //     }, []
-            // )
 
 
             function finish() {
@@ -190,7 +101,7 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                                 
                                     
                                  
-
+<span className="learntext">לחץ על האותיות לשמוע את שם האות ועל התמונות לשמוע את המילה המתחילה באות</span>
 
                                 
                 <div className = 'container-fluid col-10 contlearn' style = {{ border: "black 1px solid" } } >
@@ -214,13 +125,13 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                                             {/* </div> */}
                                                 
                                             
-                                <div className = 'container-fluid col-6' > 
+                                {/* <div className = 'container-fluid col-6' >  */}
                                     {wordImage!='' && <img onClick = {() => { audioWord1rRef.current.play() } }src = { `http://localhost:3030/images/${wordImage}` }style = {{ width: 100, height: 100 } } ></img>} 
                                                 
-                                 </div>
+                                 {/* </div> */}
 
                                                 
-                                <div className = 'container-fluid col-6' >
+                                {/* <div className = 'container-fluid col-6' >
                                                 
                                     <div className = 'row'style = {{ height: "50%" } } > { upperWord } </div> 
                                                 
@@ -228,26 +139,33 @@ export default connect(mapStateToProps)(function LearnLetter(props) {
                                     <div className = 'row'style = {{ height: "50%" } } > { word } </div>
                                                 
                                                      
-                                </div> 
+                                </div>  */}
+                                 {word.toUpperCase() }
+                                <br></br>
+                                { word }
+
                             </div> 
                                  <div className = 'row'style = {{ height: "50%" } } >
                                            
-                                    <div className = 'container-fluid col-6' >
+                                    {/* <div className = 'container-fluid col-6' > */}
                                          {wordImage2!='' && <img onClick = {() => { audioWord2rRef.current.play() } }src = { `http://localhost:3030/images/${wordImage2}` }style = {{ width: 100, height: 100 } } ></img>}
-                                    </div> 
-                                    <div className = 'container-fluid col-6' >
+                                    {/* </div>  */}
+                                    {/* <div className = 'container-fluid col-6' >
                                                     
                                         <div className = 'row'style = {{ height: "50%" } } > { upperWord2 } </div> 
                                                      
                                         <div className = 'row'style = {{ height: "50%" } } > { word2 } </div>
                                                     
-                                    </div> 
+                                    </div>  */}
+                                     { word2.toUpperCase() }
+                                        <br></br>
+                                        { word2 }  
                                 </div> 
                             </div> 
                         </div> 
                     </div>
                                                     
-                    {/* <button style = {{ position: "fixed" } } onClick = { finish } > סיים </button> */}
+                    <button style = {{ position: "fixed" } } onClick = { finish } > סיים </button>
 
                                                    
                     </div>

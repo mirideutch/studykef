@@ -28,6 +28,7 @@ import Instruction from "../instruction/instruction";
 
 
 import {changeLevel} from '../../redux/actions/lebelsAction'
+import logoStudyKef from '../../images/logoStudyKef.png'
 
 function mapStateToProps(state) {
     return {
@@ -162,7 +163,7 @@ export default connect(mapStateToProps)(function Game(props){
                     
                     <div style = {{ height: '100vh' } }className = "centerDiv">                               
                      <div className = 'container' >                    
-                    <div className = 'row' >
+                    <div className = 'row row2' >
                     
                     <div className = 'col-1' > { /* <Link to={'/Graph'}>בדיקת ציונים</Link> */ } 
                     <Button variant = "outlined"
@@ -176,7 +177,7 @@ export default connect(mapStateToProps)(function Game(props){
                     הוראות 
                     </Button> 
                     </div> 
-                   < div className = 'col-9' >
+                   < div className = 'col-8' >
 
                    
                      <Stepp steps = { steps }
@@ -186,8 +187,15 @@ export default connect(mapStateToProps)(function Game(props){
                         { lineHeight: '0px !importent' } } > 
                         </Stepp> 
                     </div> 
+                    < div className = 'col-1' > { /* <Link to={'/Instruction'}>הוראות</Link> */ } 
+                    <Button variant = "outlined"
+                    onClick = { toggleDrawer('right', true) } > שנה שלב </Button>
+                    </div> 
                    < div className = 'col-1' >
-                    {visible && <h5>{userName}  שלום</h5>}
+                    <img src={logoStudyKef} className="logb"></img>
+                    {visible && <h5 id="hello">{userName}  שלום</h5>}
+                    {/* <Button id = "changeLabel"
+                    onClick = { toggleDrawer('right', true) } > שנה שלב </Button> */}
                      </div>
 
 
@@ -196,8 +204,8 @@ export default connect(mapStateToProps)(function Game(props){
                     </div>                  
                     <React.Fragment >
                     
-                    <Button id = "changeLabel"
-                    onClick = { toggleDrawer('right', true) } > שנה שלב </Button> 
+                    {/* <Button id = "changeLabel"
+                    onClick = { toggleDrawer('right', true) } > שנה שלב </Button>  */}
                     <Drawer anchor = { 'right' }
                     open = { state['right'] }
                     onClose = { toggleDrawer('right', false) } >
@@ -311,14 +319,18 @@ export default connect(mapStateToProps)(function Game(props){
                                             [850, 420],
                                             [900, 450],
                                             [950, 420]
-                                        ]
+                                        ],
+                                        
                                     }
                                 ]
                             }
                         }
                         stayMultiHighlighted
                         onClick = { clicked }
-                        /> {
+                        /> 
+                        <span className="texts" id="games">לחץ על התמרור ללימוד האות <br></br>ועל סימוני הדרך למשחקי תירגול</span>
+                        <span className="texts" id="learn">&raquo;ללימוד האות</span>
+                        {
                             myLebels[labelNow] != undefined && myLebels[labelNow][1] != undefined && < Rating id = "ratinga"
                             name = "text-feedback"
                             value = { labelNow != newLabel ? myLebels[labelNow][1] >= 30 ? 3 : myLebels[labelNow][1] >= 20 ? 2 : myLebels[labelNow][1] >= 10 ? 1 : 0 : 0 }
@@ -384,6 +396,7 @@ export default connect(mapStateToProps)(function Game(props){
 
                                                                 
                                                                 </div> 
+                                                                
                                                                 </div> 
                                                                     {open && <FullScreenDialog open ={ open }setOpen ={ setOpen } />}
                                                                      

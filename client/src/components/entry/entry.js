@@ -8,6 +8,7 @@ import FormLogin from '../login/login2'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import './entry.css'
 import {Link} from 'react-router-dom'
+import logoStudyKef from '../../images/logoStudyKef.png'
 // import Form from '../form/form';
 
 // import Swal from 'sweetalert2'
@@ -86,7 +87,7 @@ function Entry(props) {
 
     return (
         <div className="pic">
-
+<img src={logoStudyKef} className="log"></img>
 {/* <button onClick={message}>message</button> */}
             {/* name
             <input ref={nameRef}></input>
@@ -94,7 +95,13 @@ function Entry(props) {
             <input ref={passwordRef}></input>
             <button onClick={check}>אישור</button> */}
 
-
+{/* <SweetAlert
+  success
+  title="Woot!"
+  onConfirm={this.hideAlert}
+>
+  I did it!
+</SweetAlert> */}
             <Grid textAlign='center' style={{ height: '98vh' }} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
                 {/* <Header as='h2' color='teal' textAlign='center' className='Header'>

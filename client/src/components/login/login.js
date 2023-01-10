@@ -11,6 +11,7 @@ import Letters from '../letters/letters';
 import Upload from './image'
 import Seg from './seg'
 
+import logoStudyKef from '../../images/logoStudyKef.png'
 
 // import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react'
 
@@ -68,7 +69,7 @@ export default function Login() {
       <Button variant="outlined" size="large" onClick={navg1} sx={{fontSize: 24}}>הרשמה</Button>
       <Button variant="contained" size="large" onClick={navg2} sx={{fontSize: 24}}>כניסה</Button>
     </Stack>
-  
+    <img src={logoStudyKef} className="logo"></img>
 
 
 {/* <FormLogin /> */}

@@ -191,10 +191,12 @@ const getMar = async () => {
 }
 
 
-const getAvgMark = async (req, res) => {   
+const getAvgMark = async (req, res) => {  
+    console.log("----------------------------------"); 
     let birthDate = req.params.birthDate
     let b = new Date(birthDate); 
     try {
+        console.log("*************************");
         time1 = new Date(birthDate)
         time2 = new Date(birthDate)        
         let users = await userModel.find({
@@ -215,6 +217,7 @@ const getAvgMark = async (req, res) => {
                     if(count >= 4){
                         PracticesGames.forEach(element => {
                             sum+=element.mark
+                            console.log("ind "+ind+"  index  "+index+"   "+sum);
                         });                                
                     numOfUsers+=1
                     totalMarks+=sum
@@ -232,10 +235,12 @@ const getAvgMark = async (req, res) => {
             for (let index = 0; index < Labels.length; index++) {
                 let hismark =await getMark( req.params.user, Labels[index])
                 hismMarks.push(hismark)                
-            }         
+            }  
+            console.log("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[");       
         res.json({avg:usersAvgMark, hism:hismMarks})
          }
     catch (err) {
+        console.log(err+"   err");
             res.send(err)
 
         }

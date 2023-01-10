@@ -60,6 +60,8 @@ function QFormExample(props) {
       setOpen(false);
       if (userOk == true)
         navg()
+      // else
+      // userOk=null;
     }, 2000);
 
   }, [userOk])
@@ -83,8 +85,8 @@ function QFormExample(props) {
             phone: checkPassword.current.value
           }
 
-          axios.post(`http://localhost:3030/user/createUser`, user).then(async res => {
-            if (res.data.ok) {
+          await axios.post(`http://localhost:3030/user/createUser`, user).then(async res => {
+            if (res.data.ok!= undefined) {
               await setUserOk(true)
               
               await dispatch(updateUser(res.data.u))
@@ -98,7 +100,7 @@ function QFormExample(props) {
 
         }
         else {
-          alert("נסה למלא שנית")
+          // alert("נסה למלא שנית")
         }
       }
     }
@@ -196,13 +198,13 @@ function QFormExample(props) {
 
         {/* date */}
         <Form.Group as={Col} md="6" controlId="validationCustom03">
-          <Form.Label>גיל</Form.Label>
+          <Form.Label>תאריך לידה</Form.Label>
           <Form.Control
             type="Date"
             max={new Date().toISOString().split("T")[0]}
             //  לעשות תאריך מקסימום
             // onChange={checkAge}
-            placeholder="גיל"
+            placeholder="תאריך לידה"
             required
             ref={age}
           />
@@ -210,7 +212,7 @@ function QFormExample(props) {
             תאריך שגוי
           </Form.Control.Feedback>} */}
           {<Form.Control.Feedback type="invalid">
-            הכנס
+          הכנס תאריך לידה 
           </Form.Control.Feedback>}
         </Form.Group>
 

@@ -28,6 +28,7 @@ import {
 import { Chart } from 'react-chartjs-2';
 
 ChartJS.register(
+  
   LinearScale,
   CategoryScale,
   BarElement,
@@ -57,26 +58,26 @@ const SS= connect(mapStateToProps)( function Graph(props){
   const {  myLebels, birthDate, user } = props
 let labels = Object.keys(myLebels)
 console.log("labels  ******"+labels);
-const[avgData, setavgData]=useState([89,90,88,95,93])//
-const [myData, setmyData]= useState([81,85,92,93,88])//
+const[avgData, setavgData]=useState([])//
+const [myData, setmyData]= useState([])//
 // let myData
-const [ok , setok]= useState(true)//
+const [ok , setok]= useState(false)//
 let re
 
-// useEffect(
-//   function g() {
-//     axios.get(`http://localhost:3030/exerciseUser/getAvgMark/${birthDate}/${user}/${labels} `).then(res => {
+useEffect(
+  function g() {
+    axios.get(`http://localhost:3030/exerciseUser/getAvgMark/${birthDate}/${user}/${labels} `).then(res => {
     
                                               
-//       setavgData(res.data.avg)
-//       setmyData(res.data.hism)
-//       setok(true)
-//       }).catch((err) => {
-//           console.log(err)
-//       })
-//   },
-//   []
-// )
+      setavgData(res.data.avg)
+      setmyData(res.data.hism)
+      setok(true)
+      }).catch((err) => {
+          console.log(err)
+      })
+  },
+  []
+)
 
 const data = {
   labels,

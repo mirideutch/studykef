@@ -5,3 +5,11 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+.log{
+    width: 150px;
+
+    position: fixed;
+    top: 3vh;
+    right: 5vw;
+}
+
